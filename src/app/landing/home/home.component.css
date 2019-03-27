@@ -1,0 +1,24 @@
+.bannerSection {
+    background-image: url("~/assets/images/main_img_sardar.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+   }
+
+   @media (min-width: 768px){
+.special_someone_wrap {
+    margin: 53px 0 72px;
+    line-height: 1.6em;
+}
+   }
+.special_someone_wrap {
+    margin: 20px 0 50px;
+    line-height: 1.3em;
+    font-family: Roboto,sans-serif;
+    color: #72727d;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
