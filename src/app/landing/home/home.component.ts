@@ -14,9 +14,6 @@ export class HomeComponent implements OnInit {
   selectedYear:  any;
 
   ngOnInit() {
-    $(document).ready(function(){
-      $('.modal').modal();
-    });
   }
 
   registerModal(){
