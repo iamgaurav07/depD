@@ -4,9 +4,9 @@
       <div class="hero-module--topNavWrap--JJLjM">
         <div class="logo india_logo"></div>
         <div class="hero-module--topRightNav--2eKnV">
-          <a href="javascript:void(0)" class="hero-module--login--1hnxr" data-toggle="modal"
+          <a href="javascript:void(0)" class="hero-module--login--1hnxr margin0" data-toggle="modal"
             data-target="#loginModal">Login<span class="hero-module--arrow--1Qsh6"></span></a>
-          <a href="javascript:void(0)" class="hero-module--login--1hnxr" data-toggle="modal"
+          <a href="javascript:void(0)" class="hero-module--login--1hnxr margin0" data-toggle="modal"
             data-target="#exampleModalCenter">Join us<span class="hero-module--arrow--1Qsh6"></span></a>
         </div>
       </div>
@@ -93,53 +93,272 @@
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Let's create account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-              placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-          </div>
-          <div class="form-group">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-              <label class="form-check-label" for="inlineRadio1">Male</label>
+    <ng-container *ngIf="joinUs == 'step1'">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Let's create account</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-              <label class="form-check-label" for="inlineRadio2">Female</label>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Create profile for</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Self</option>
-              <option>Son</option>
-              <option>Daughter</option>
-              <option>Brother</option>
-              <option>Sister</option>
-              <option>Friend</option>
-              <option>Relative</option>
-            </select>
-          </div>
-        </form>
+            <div class="form-group">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                  value="option1">
+                <label class="form-check-label" for="inlineRadio1">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                  value="option2">
+                <label class="form-check-label" for="inlineRadio2">Female</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Create profile for</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>Self</option>
+                <option>Son</option>
+                <option>Daughter</option>
+                <option>Brother</option>
+                <option>Sister</option>
+                <option>Friend</option>
+                <option>Relative</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="createAccount()" class="btn btn-primary">Sign Up</button>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Create</button>
+    </ng-container>
+
+    <ng-container *ngIf="joinUs == 'step2'">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Tell us about yourself</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">First Name</label>
+              <input type="text" class="form-control" id="firstname" placeholder="First name" required>
+              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="firstname" placeholder="Last name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="mobileNumber">Mobile No.</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">+91</span>
+                </div>
+                <div class="custom-file">
+                  <input type="text" class="form-control" id="firstname" placeholder="Enter Mobile No." required>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="saveBasicInformation()" class="btn btn-primary">Save</button>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
+    <ng-container *ngIf="joinUs == 'step3'">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Qualification Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="collegeName">University / College Name</label>
+              <input type="text" class="form-control" id="collegeName" placeholder="University / College Name">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlSelect1">Education Level</label>
+              <select class="form-control" id="exampleFormControlSelect1">
+                <option>Doctrate</option>
+                <option>Masters</option>
+                <option>Honours Degree</option>
+                <option>Bechlors</option>
+                <option>Ungraduate</option>
+                <option>Diploma</option>
+                <option>High School</option>
+                <option>Less Than High School</option>
+                <option>Trade School</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="educationField">Education Field</label>
+              <input type="text" class="form-control" id="educationField" placeholder="Education field">
+            </div>
+            <div class="form-group">
+              <label for="workWith">Work With</label>
+              <select class="form-control" id="workWith">
+                <option>Private Company</option>
+                <option>Goverment / Public Sector</option>
+                <option>Defence / Civil Services</option>
+                <option>Business / Self Employes</option>
+                <option>Not Working</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="companyName">Organisation Name</label>
+              <input type="text" class="form-control" id="companyName" placeholder="Organisation Name">
+            </div>
+            <div class="form-group">
+              <label for="annualIncome">Annual Income</label>
+              <select class="form-control" id="annualIncome">
+                <option>Less than 2 Lakh</option>
+              </select>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="saveQualificationDetails()" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="joinUs == 'step4'">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Little more about yourself</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="bodyType">Body Type</label>
+                  <select class="form-control" id="bodyType">
+                    <option>Slim</option>
+                    <option>Athletic</option>
+                    <option>Average</option>
+                    <option>Heavy</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="skinTone">Skin Tone</label>
+                  <select class="form-control" id="skinTone">
+                    <option>Very Fair</option>
+                    <option>Fair</option>
+                    <option>Tan</option>
+                    <option>Dark</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="smokeCheck">Do You Smoke</label>
+                  <select class="form-control" id="smokeCheck">
+                    <option>No</option>
+                    <option>Yes</option>
+                    <option>Occasionally</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="drinkCheck">Do You Drink</label>
+                  <select class="form-control" id="drinkCheck">
+                    <option>No</option>
+                    <option>Yes</option>
+                    <option>Occasionally</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label for="dietCheck">Your Diet</label>
+                  <select class="form-control" id="dietCheck">
+                    <option>Veg</option>
+                    <option>Non-Veg</option>
+                    <option>Occasionally Non-Veg</option>
+                    <option>Eggeterian</option>
+                    <option>Vegan</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="dietCheck">Your Height</label>
+                  <select class="form-control" id="dietCheck">
+                    <option>4ft 5in - 134cm</option>
+                    <option>4ft 6in - 137cm</option>
+                    <option>4ft 7in - 140cm</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="dietHightCheck()" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="joinUs == 'step5'">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Almost Done</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="aboutYourself">About yourself</label>
+              <textarea class="form-control" id="aboutYourself" placeholder="Write about yourself"></textarea>
+            </div>
+            <div class="form-group">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">Physical Disability</label>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="almostDoneDetail()" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>
 
@@ -177,7 +396,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Login</button>
+        <button type="button" (click)="authenticate()" class="btn btn-primary">Login</button>
       </div>
     </div>
   </div>
