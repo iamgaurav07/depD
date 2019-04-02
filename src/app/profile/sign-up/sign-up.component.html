@@ -1,0 +1,329 @@
+<app-header></app-header>
+<div class="container-fluid">
+
+  <div class="container-contact100">
+    <div class="wrap-contact100" *ngIf="joinUs == 'step1'">
+      <form class="contact100-form validate-form">
+        <span class="contact100-form-title">
+          Tell us about yourself
+        </span>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Enter Your Email (e@a.x)">
+          <span class="label-input100">First Name </span>
+          <input class="input100" type="text" name="f_name" placeholder="Enter Your Email ">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Last Name</span>
+          <input class="input100" type="password" name="l_name" placeholder="Enter Password">
+        </div>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Enter Your Email (e@a.x)">
+          <span class="label-input100">Date of Birth </span>
+          <input class="input100" type="text" name="dob" placeholder="Enter Your Email ">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Mobile Number</span>
+          <input class="input100" type="number" name="mobile" placeholder="Enter Password">
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button class="contact100-form-btn" (click)="saveBasicInformation()">
+            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+        </div>
+
+
+      </form>
+    </div>
+
+    <div class="wrap-contact100" *ngIf="joinUs == 'step2'">
+      <form class="contact100-form validate-form">
+        <span class="contact100-form-title">
+          Address
+        </span>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">Address </span>
+          <input class="input100" type="text" name="address" placeholder="Enter Address">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">City</span>
+          <input type="text" class="input100" id="city" placeholder="Enter City">
+        </div>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">State </span>
+          <input type="text" class="input100" id="state" placeholder="Enter State">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Pincode</span>
+          <input type="text" class="input100" id="pincode" placeholder="Enter Pincode">
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button class="contact100-form-btn" (click)="saveAddressDetails()">
+            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+        </div>
+
+
+      </form>
+    </div>
+
+    <div class="wrap-contact100" *ngIf="joinUs == 'step3'">
+      <form class="contact100-form validate-form">
+        <span class="contact100-form-title">
+          Qualification & Working Details
+        </span>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">University / College Name </span>
+          <input type="text" class="input100" id="collegeName" placeholder="University / College Name">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Education Level</span>
+          <div>
+            <select class="form-control" formControlName="profileFor" id="exampleFormControlSelect1">
+              <option>Doctrate</option>
+              <option>Masters</option>
+              <option>Honours Degree</option>
+              <option>Bechlors</option>
+              <option>Ungraduate</option>
+              <option>Diploma</option>
+              <option>High School</option>
+              <option>Less Than High School</option>
+              <option>Trade School</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">Education Field </span>
+          <input type="text" class="input100" id="educationField" placeholder="Education field">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Work With</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>Private Company</option>
+              <option>Goverment / Public Sector</option>
+              <option>Defence / Civil Services</option>
+              <option>Business / Self Employes</option>
+              <option>Not Working</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">Organisation Name </span>
+          <input type="text" class="input100" id="companyName" placeholder="Organisation Name">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Annual Income</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>Less than 2 Lakh</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button class="contact100-form-btn" (click)="saveQualificationDetails()">
+            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+        </div>
+
+
+      </form>
+    </div>
+
+    <div class="wrap-contact100" *ngIf="joinUs == 'step4'">
+      <form class="contact100-form validate-form">
+        <span class="contact100-form-title">
+          Little more about yourself
+        </span>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">Body Type</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>Slim</option>
+              <option>Athletic</option>
+              <option>Average</option>
+              <option>Heavy</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Skin Tone</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>Very Fair</option>
+              <option>Fair</option>
+              <option>Tan</option>
+              <option>Dark</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">Do You Smoke</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>No</option>
+              <option>Yes</option>
+              <option>Occasionally</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Do You Drink</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>No</option>
+              <option>Yes</option>
+              <option>Occasionally</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">Your Diet</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>Veg</option>
+              <option>Non-Veg</option>
+              <option>Occasionally Non-Veg</option>
+              <option>Eggeterian</option>
+              <option>Vegan</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Your Height</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>4ft 5in - 134cm</option>
+              <option>4ft 6in - 137cm</option>
+              <option>4ft 7in - 140cm</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button class="contact100-form-btn" (click)="dietHightCheck()">
+            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+        </div>
+
+
+      </form>
+    </div>
+
+    <div class="wrap-contact100" *ngIf="joinUs == 'step5'">
+      <form class="contact100-form validate-form">
+        <span class="contact100-form-title">
+          Almost done
+        </span>
+
+        <div class="wrap-input100 validate-input bg1">
+          <span class="label-input100">About yourself </span>
+          <textarea class="input100" id="aboutYourself" placeholder="Write about yourself"></textarea>
+        </div>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">Physical Disability</span>
+          <div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+          </div>
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button class="contact100-form-btn" (click)="almostDoneDetail()">
+            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+        </div>
+
+
+      </form>
+    </div>
+
+
+  </div>
+
+
+  <!-- <div class="container-contact100">
+    <div class="wrap-contact100">
+      <form class="contact100-form validate-form">
+        <span class="contact100-form-title">
+          Tell us about yourself
+        </span>
+
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+          <span class="label-input100">State </span>
+          <input class="input100" type="text" placeholder="Enter Your Email ">
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">Pincode</span>
+          <input class="input100" type="text" placeholder="Enter Password">
+        </div>
+               
+
+      </form>
+    </div>
+  </div> -->
+
+
+
+
+
+  <!-- <script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+
+
+			$(".js-select2").each(function(){
+				$(this).on('select2:close', function (e){
+					if($(this).val() == "Please chooses") {
+						$('.js-show-service').slideUp();
+					}
+					else {
+						$('.js-show-service').slideUp();
+						$('.js-show-service').slideDown();
+					}
+				});
+			});
+		})
+	</script> -->
+
+
+
+</div>
+<app-footer></app-footer>

@@ -27,30 +27,67 @@
                 <label class="label">Age From</label>
                 <div class="Dropdown-root">
                   <select class="form-control">
-                    <option>18 yrs</option>
-                    <option>19 yrs</option>
-                    <option>20 yrs</option>
-                    <option>21 yrs</option>
+                    <option disabled>Select Min Age</option>
+                    <option value="18">18 yrs</option>
+                    <option value="19">19 yrs</option>
+                    <option value="20">20 yrs</option>
+                    <option value="21">21 yrs</option>
+                    <option value="22">22 yrs</option>
+                    <option value="23">23 yrs</option>
+                    <option value="24">24 yrs</option>
+                    <option value="25">25 yrs</option>
+                    <option value="26">26 yrs</option>
+                    <option value="27">27 yrs</option>
+                    <option value="28">28 yrs</option>
+                    <option value="29">29 yrs</option>
+                    <option value="30">30 yrs</option>
+                    <option value="31">31 yrs</option>
+                    <option value="32">32 yrs</option>
+                    <option value="33">33 yrs</option>
+                    <option value="34">34 yrs</option>
+                    <option value="35">35 yrs</option>
+                    <option value="36">36 yrs</option>
+                    <option value="37">37 yrs</option>
+                    <option value="38">38 yrs</option>
+                    <option value="39">39 yrs</option>
+                    <option value="40">40 yrs</option>
                   </select>
                 </div>
               </div>
               <div class="form-group col-md-2 col-6"><label class="label">Age To</label>
                 <div class="Dropdown-root">
                   <select class="form-control">
-                    <option>19 yrs</option>
-                    <option>20 yrs</option>
-                    <option>21 yrs</option>
-                    <option>22 yrs</option>
+                      <option disabled>Select Max Age</option>
+                      <option value="19">19 yrs</option>
+                      <option value="20">20 yrs</option>
+                      <option value="21">21 yrs</option>
+                      <option value="22">22 yrs</option>
+                      <option value="23">23 yrs</option>
+                      <option value="24">24 yrs</option>
+                      <option value="25">25 yrs</option>
+                      <option value="26">26 yrs</option>
+                      <option value="27">27 yrs</option>
+                      <option value="28">28 yrs</option>
+                      <option value="29">29 yrs</option>
+                      <option value="30">30 yrs</option>
+                      <option value="31">31 yrs</option>
+                      <option value="32">32 yrs</option>
+                      <option value="33">33 yrs</option>
+                      <option value="34">34 yrs</option>
+                      <option value="35">35 yrs</option>
+                      <option value="36">36 yrs</option>
+                      <option value="37">37 yrs</option>
+                      <option value="38">38 yrs</option>
+                      <option value="39">39 yrs</option>
+                      <option value="40">40 yrs</option>
                   </select>
                 </div>
               </div>
-              <div class="form-group col-md-3 col-6"><label class="label" for="inputPassword4">Prefered Title</label>
+              <div class="form-group col-md-3 col-6"><label class="label" for="inputPassword4">Preferred Title</label>
                 <div class="Dropdown-root">
                   <select class="form-control">
-                    <option>Hindu</option>
-                    <option>Muslim</option>
-                    <option>Sikh</option>
-                    <option>Christian</option>
+                    <option value="0" disabled>Select Title</option>
+                    <option *ngFor="let title of titles" value="{{title._id}}">{{title.title}}</option>
                   </select>
                 </div>
               </div>
@@ -93,7 +130,6 @@
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <ng-container *ngIf="joinUs == 'step1'">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalCenterTitle">Let's create account</h5>
@@ -102,39 +138,38 @@
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form [formGroup]="signUpForm">
             <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                placeholder="Enter email">
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <label for="emailAddress">Email address</label>
+              <input type="email" formControlName="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter email">
+             <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              <label for="password">Password</label>
+              <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password">
             </div>
             <div class="form-group">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                  value="option1">
+                <input class="form-check-input" formControlName="gender" type="radio" name="gender" id="inlineRadio1"
+                  value="male">
                 <label class="form-check-label" for="inlineRadio1">Male</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                  value="option2">
+                <input class="form-check-input" type="radio" formControlName="gender" name="gender" id="inlineRadio2"
+                  value="female">
                 <label class="form-check-label" for="inlineRadio2">Female</label>
               </div>
             </div>
             <div class="form-group">
               <label for="exampleFormControlSelect1">Create profile for</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>Self</option>
-                <option>Son</option>
-                <option>Daughter</option>
-                <option>Brother</option>
-                <option>Sister</option>
-                <option>Friend</option>
-                <option>Relative</option>
+              <select class="form-control" formControlName="profileFor" id="exampleFormControlSelect1">
+                <option value="self">Self</option>
+                <option value="son">Son</option>
+                <option value="daughter">Daughter</option>
+                <option value="brother">Brother</option>
+                <option value="sister">Sister</option>
+                <option value="friend">Friend</option>
+                <option value="relative">Relative</option>
               </select>
             </div>
           </form>
@@ -143,222 +178,7 @@
           <button type="button" (click)="createAccount()" class="btn btn-primary">Sign Up</button>
         </div>
       </div>
-    </ng-container>
-
-    <ng-container *ngIf="joinUs == 'step2'">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Tell us about yourself</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">First Name</label>
-              <input type="text" class="form-control" id="firstname" placeholder="First name" required>
-              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" class="form-control" id="firstname" placeholder="Last name" required>
-            </div>
-
-            <div class="form-group">
-              <label for="mobileNumber">Mobile No.</label>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroupFileAddon01">+91</span>
-                </div>
-                <div class="custom-file">
-                  <input type="text" class="form-control" id="firstname" placeholder="Enter Mobile No." required>
-                </div>
-              </div>
-            </div>
-
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)="saveBasicInformation()" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="joinUs == 'step3'">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Qualification Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="collegeName">University / College Name</label>
-              <input type="text" class="form-control" id="collegeName" placeholder="University / College Name">
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Education Level</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>Doctrate</option>
-                <option>Masters</option>
-                <option>Honours Degree</option>
-                <option>Bechlors</option>
-                <option>Ungraduate</option>
-                <option>Diploma</option>
-                <option>High School</option>
-                <option>Less Than High School</option>
-                <option>Trade School</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="educationField">Education Field</label>
-              <input type="text" class="form-control" id="educationField" placeholder="Education field">
-            </div>
-            <div class="form-group">
-              <label for="workWith">Work With</label>
-              <select class="form-control" id="workWith">
-                <option>Private Company</option>
-                <option>Goverment / Public Sector</option>
-                <option>Defence / Civil Services</option>
-                <option>Business / Self Employes</option>
-                <option>Not Working</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="companyName">Organisation Name</label>
-              <input type="text" class="form-control" id="companyName" placeholder="Organisation Name">
-            </div>
-            <div class="form-group">
-              <label for="annualIncome">Annual Income</label>
-              <select class="form-control" id="annualIncome">
-                <option>Less than 2 Lakh</option>
-              </select>
-            </div>
-
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)="saveQualificationDetails()" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="joinUs == 'step4'">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Little more about yourself</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <div class="row">
-                <div class="col">
-                  <label for="bodyType">Body Type</label>
-                  <select class="form-control" id="bodyType">
-                    <option>Slim</option>
-                    <option>Athletic</option>
-                    <option>Average</option>
-                    <option>Heavy</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label for="skinTone">Skin Tone</label>
-                  <select class="form-control" id="skinTone">
-                    <option>Very Fair</option>
-                    <option>Fair</option>
-                    <option>Tan</option>
-                    <option>Dark</option>
-                  </select>
-                </div>
-              </div>
-
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="col">
-                  <label for="smokeCheck">Do You Smoke</label>
-                  <select class="form-control" id="smokeCheck">
-                    <option>No</option>
-                    <option>Yes</option>
-                    <option>Occasionally</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label for="drinkCheck">Do You Drink</label>
-                  <select class="form-control" id="drinkCheck">
-                    <option>No</option>
-                    <option>Yes</option>
-                    <option>Occasionally</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="row">
-                <div class="col">
-                  <label for="dietCheck">Your Diet</label>
-                  <select class="form-control" id="dietCheck">
-                    <option>Veg</option>
-                    <option>Non-Veg</option>
-                    <option>Occasionally Non-Veg</option>
-                    <option>Eggeterian</option>
-                    <option>Vegan</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label for="dietCheck">Your Height</label>
-                  <select class="form-control" id="dietCheck">
-                    <option>4ft 5in - 134cm</option>
-                    <option>4ft 6in - 137cm</option>
-                    <option>4ft 7in - 140cm</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)="dietHightCheck()" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="joinUs == 'step5'">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Almost Done</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="aboutYourself">About yourself</label>
-              <textarea class="form-control" id="aboutYourself" placeholder="Write about yourself"></textarea>
-            </div>
-            <div class="form-group">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                <label class="form-check-label" for="inlineCheckbox2">Physical Disability</label>
-              </div>
-            </div>
-
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)="almostDoneDetail()" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </ng-container>
+    
   </div>
 </div>
 
@@ -375,16 +195,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="loginForm">
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" class="form-control"  aria-describedby="emailHelp" placeholder="Enter email" aria-describedby="emailHelp"
               placeholder="Enter email">
             <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input type="password" class="form-control" formControlName="password" id="exampleInputPassword1" placeholder="Password">
           </div>
           <div class="form-group">
             <div class="form-check form-check-inline">
