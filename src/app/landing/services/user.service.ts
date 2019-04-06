@@ -9,7 +9,8 @@ import { CookieService } from '../../common-services/cookie.service';
 })
 export class UserService {
 
-  constructor(private httpClient: HttpClient, private cs: CookieService) { }
+  constructor(private httpClient: HttpClient, private cs: CookieService) { 
+  }
 
   createuser(obj) {
     console.log("working income");
@@ -23,25 +24,22 @@ export class UserService {
 
   saveUpdateUserTokenAndDetails(payload) {
     let token = payload.token;
-    let jwtHelper = new JwtHelperService();
-    let expirationDate = jwtHelper.getTokenExpirationDate(token);
-
     if (this.cs.hasItem("token")) {this.cs.removeItem("token", null, null);}
-    this.cs.setItem("token", token, expirationDate, "/", null, null);
+    if (this.cs.hasItem("user_id") || payload.user_id) {this.cs.removeItem("user_id", null, null);}
+    if (payload.user_id) {this.cs.setItem("user_id", payload.user_id, 24*3600 , "/", null, null);}
+    if (this.cs.hasItem("gender")) {this.cs.removeItem("gender", null, null)}
+    this.cs.setItem("token", token, 24*3600 , "/", null, null);
+    this.cs.setItem("userId", payload.userid, 24*3600 , "/", null, null);
+    this.cs.setItem("gender", payload.gender, 24*3600 , "/", null, null);
     localStorage.setItem("token", token);
   }
 
   isUserLoggedIn() {
     if (
-      this.cs.hasItem("token")
+      this.cs.hasItem("token") && this.cs.hasItem("userId")
     ) {
-      let token = this.cs.getItem("token");
-      if (!token) return false;
-      let jwtHelper = new JwtHelperService();
-      let expirationDate = jwtHelper.getTokenExpirationDate(token);
-      let isTokExpired = jwtHelper.isTokenExpired(token);
-      console.log("token expired", isTokExpired)
-      return isTokExpired;
+      return true
+      
     } else {
       console.log("mandatory fields missing...");
       return false;

@@ -22,6 +22,13 @@ export class HomeComponent implements OnInit {
   loginForm: FormGroup;
   titles: any;
 
+  duplicateEmail = false;
+
+  signupEmailError: any;
+  signupPassError: any;
+  genderError: any;
+  profileforError: any;
+
   ngOnInit() {
     this.getTitle();
     this.initSignUpForm();
@@ -31,8 +38,8 @@ export class HomeComponent implements OnInit {
     this.signUpForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
-      gender: [Validators.required],
-      profileFor: [Validators.required]
+      gender: ['',Validators.required],
+      profileFor: ['',Validators.required]
     })
 
     this.loginForm = this.fb.group({
@@ -41,7 +48,7 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getTitle(){
+  getTitle() {
     this.us.getKambojTitles().subscribe((res: any) => {
       if (res.success) {
         this.titles = res.message;
@@ -52,33 +59,56 @@ export class HomeComponent implements OnInit {
   }
 
   createAccount() {
-    let obj = {
-      email: this.signUpForm.controls.email.value,
-      password: this.signUpForm.controls.password.value,
-      gender: this.signUpForm.controls.gender.value,
-      profileFor: this.signUpForm.controls.profileFor.value,
-    }
-    this.us.createuser(obj).subscribe((res: any) => {
-      if (res.success) {
-        localStorage.setItem('email', this.signUpForm.controls.email.value);
-        $('#exampleModalCenter').modal('hide');
-        $('#loginModal').modal('show');
-      } else {
-        console.log("something went wrong");
+
+    this.signupEmailError = this.signUpForm.controls.email.invalid;
+    this.signupPassError = this.signUpForm.controls.password.invalid;
+    this.genderError = this.signUpForm.controls.gender.invalid;
+    this.profileforError = this.signUpForm.controls.profileFor.invalid;
+
+    console.log(this.genderError, "==",this.profileforError)
+
+    if (!this.signupEmailError && !this.signupPassError && !this.genderError && !this.profileforError) {
+      let obj = {
+        email: this.signUpForm.value.email,
+        password: this.signUpForm.value.password,
+        gender: this.signUpForm.value.gender,
+        profileFor: this.signUpForm.value.profileFor
       }
-    })
+
+      this.us.createuser(obj).subscribe((res: any) => {
+        if (res.success) {
+          localStorage.setItem('email', this.signUpForm.controls.email.value);
+          this.duplicateEmail = false;
+          $('#exampleModalCenter').modal('hide');
+          $('#loginModal').modal('show');
+        } else {
+          if (res.code == 102) {
+            this.duplicateEmail = true;
+          }
+          console.log("something went wrong");
+        }
+      })
+    }
+
 
   }
 
   authenticate() {
-    $('#loginModal').modal('hide');
 
     let bodyObj = this.loginForm.value
 
     this.us.authentication(bodyObj).subscribe((res: any) => {
       if (res.success) {
+        console.log(res);
         this.us.saveUpdateUserTokenAndDetails(res);
-        this.router.navigate(["/profile/signup"])
+        $('#loginModal').modal('hide'); $('#loginModal').modal('hide');
+
+        if (res.user_id){
+          this.router.navigate(["/profile/findmatch"]);
+        } else {
+          this.router.navigate(["/profile/signup"]);
+        }
+        
       } else {
         this.cs.deleteAllCookies();
       }

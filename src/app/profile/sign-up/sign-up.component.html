@@ -3,34 +3,59 @@
 
   <div class="container-contact100">
     <div class="wrap-contact100" *ngIf="joinUs == 'step1'">
-      <form class="contact100-form validate-form">
+      <form [formGroup]="basicDetail" class="contact100-form validate-form">
         <span class="contact100-form-title">
           Tell us about yourself
         </span>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Enter Your Email (e@a.x)">
-          <span class="label-input100">First Name </span>
-          <input class="input100" type="text" name="f_name" placeholder="Enter Your Email ">
+          <span class="label-input100">Name </span>
+          <input class="input100" type="text" formControlName="name" placeholder="Enter your name">
+          <span *ngIf="nameError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
-          <span class="label-input100">Last Name</span>
-          <input class="input100" type="password" name="l_name" placeholder="Enter Password">
+          <span class="label-input100">Title</span>
+          <select class="form-control" formControlName="title">
+            <option value="" disabled selected>Select Title</option>
+            <option *ngFor="let title of titles" value="{{title._id}}">{{title.title}}</option>
+          </select>
+          <span *ngIf="titleError" class="label-input100 text-danger">*Required</span>
         </div>
 
-        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate="Enter Your Email (e@a.x)">
+        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Date of Birth </span>
-          <input class="input100" type="text" name="dob" placeholder="Enter Your Email ">
+          <input class="input100" type="text" bsDatepicker readonly formControlName="dateOfBirth"
+            placeholder="Date of Birth ">
+          <span *ngIf="dateOfBirthError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Mobile Number</span>
-          <input class="input100" type="number" name="mobile" placeholder="Enter Password">
+          <input class="input100" type="text" formControlName="mobile" placeholder="Enter mobile no.">
+          <span *ngIf="mobileError" class="label-input100 text-danger">*Required</span>
+          <span *ngIf="duplicateMobile" class="label-input100 text-danger">*Mobile number already registered</span>
+        </div>
+
+        <div *ngIf="status == 'true'">
+          <alert type="success" [dismissible]="true">
+            <strong>Success!</strong> Saved Successfully.
+          </alert>
+        </div>
+
+        <div *ngIf="status == 'false'">
+          <alert type="warning" [dismissible]="true">
+            <strong>Warning!</strong> Something went wrong.
+          </alert>
         </div>
 
         <div class="container-contact100-form-btn">
-          <button class="contact100-form-btn" (click)="saveBasicInformation()">
+          <button *ngIf="status == '' || status == 'false' " class="contact100-form-btn"
+            (click)="saveBasicInformation()">
             <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+          <button *ngIf="status == 'true'" class="contact100-form-btn" (click)="joinUs = 'step2'; this.status = ''">
+            <span> Next <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
           </button>
         </div>
 
@@ -39,34 +64,54 @@
     </div>
 
     <div class="wrap-contact100" *ngIf="joinUs == 'step2'">
-      <form class="contact100-form validate-form">
+      <form [formGroup]="addressDetail" class="contact100-form validate-form">
         <span class="contact100-form-title">
           Address
         </span>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Address </span>
-          <input class="input100" type="text" name="address" placeholder="Enter Address">
+          <input class="input100" type="text" formControlName="address" placeholder="Enter Address">
+          <span *ngIf="addressError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">City</span>
-          <input type="text" class="input100" id="city" placeholder="Enter City">
+          <input type="text" class="input100" id="city" formControlName="city" placeholder="Enter City">
+          <span *ngIf="cityError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">State </span>
-          <input type="text" class="input100" id="state" placeholder="Enter State">
+          <input type="text" class="input100" id="state" formControlName="state" placeholder="Enter State">
+          <span *ngIf="stateError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Pincode</span>
-          <input type="text" class="input100" id="pincode" placeholder="Enter Pincode">
+          <input type="text" class="input100" id="pincode" formControlName="pincode" placeholder="Enter Pincode">
+          <span *ngIf="pincodeError" class="label-input100 text-danger">*Required</span>
+        </div>
+
+        <div *ngIf="status == 'true'">
+          <alert type="success" [dismissible]="true">
+            <strong>Success!</strong> Saved Successfully.
+          </alert>
+        </div>
+
+        <div *ngIf="status == 'false'">
+          <alert type="warning" [dismissible]="true">
+            <strong>Warning!</strong> Something went wrong.
+          </alert>
         </div>
 
         <div class="container-contact100-form-btn">
-          <button class="contact100-form-btn" (click)="saveAddressDetails()">
+          <button *ngIf="status == '' || status == 'false'" class="contact100-form-btn" (click)="saveAddressDetails()">
             <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+
+          <button *ngIf="status == 'true'" class="contact100-form-btn" (click)="joinUs = 'step3'; this.status = ''">
+            <span> Next <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
           </button>
         </div>
 
@@ -75,80 +120,110 @@
     </div>
 
     <div class="wrap-contact100" *ngIf="joinUs == 'step3'">
-      <form class="contact100-form validate-form">
+      <form [formGroup]="qualificationAndWorkingDetails" class="contact100-form validate-form">
         <span class="contact100-form-title">
           Qualification & Working Details
         </span>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">University / College Name </span>
-          <input type="text" class="input100" id="collegeName" placeholder="University / College Name">
+          <input type="text" class="input100" formControlName="collegeName" id="collegeName"
+            placeholder="University / College Name">
+          <span *ngIf="collegeNameError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Education Level</span>
           <div>
-            <select class="form-control" formControlName="profileFor" id="exampleFormControlSelect1">
-              <option>Doctrate</option>
-              <option>Masters</option>
-              <option>Honours Degree</option>
-              <option>Bechlors</option>
-              <option>Ungraduate</option>
-              <option>Diploma</option>
-              <option>High School</option>
-              <option>Less Than High School</option>
-              <option>Trade School</option>
+            <select class="form-control" formControlName="educationLevel" id="educationLevel">
+              <option selected value="" disabled>Select Education level</option>
+              <option value="Doctrate">Doctrate</option>
+              <option value="Masters">Masters</option>
+              <option value="Honours Degree">Honours Degree</option>
+              <option value="Bechlors">Bechlors</option>
+              <option value="Ungraduate">Ungraduate</option>
+              <option value="Diploma">Diploma</option>
+              <option value="High School">High School</option>
+              <option value="Less Than High School">Less Than High School</option>
+              <option value="Trade School">Trade School</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="educationLevelError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Education Field </span>
-          <input type="text" class="input100" id="educationField" placeholder="Education field">
+          <input type="text" class="input100" formControlName="educationField" id="educationField"
+            placeholder="Education field">
+          <span *ngIf="educationFieldError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Work With</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Private Company</option>
-              <option>Goverment / Public Sector</option>
-              <option>Defence / Civil Services</option>
-              <option>Business / Self Employes</option>
-              <option>Not Working</option>
+            <select class="form-control" formControlName="workWith" id="workWith">
+              <option selected value="" disabled>Select Work with</option>
+              <option value="Private Company">Private Company</option>
+              <option value="Goverment / Public Sector">Goverment / Public Sector</option>
+              <option value="Defence / Civil Services">Defence / Civil Services</option>
+              <option value="Business / Self Employes">Business / Self Employes</option>
+              <option value="Not Working">Not Working</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="workWithError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Organisation Name </span>
-          <input type="text" class="input100" id="companyName" placeholder="Organisation Name">
+          <input type="text" class="input100" formControlName="companyName" id="" placeholder="Organisation Name">
+          <span *ngIf="companyNameError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Annual Income</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Less than 2 Lakh</option>
+            <select class="form-control" formControlName="annualIncome" id="annualIncome">
+              <option selected value="" disabled>Annual Income</option>
+              <option value="Less than 2 Lakh">Less than 2 Lakh</option>
+              <option value="Between 2 than 5 Lakh">Between 2 than 5 Lakh</option>
+              <option value="Between 5 than 8 Lakh">Between 5 than 8 Lakh</option>
+              <option value="More than 8 Lakh">More than 8 Lakh</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="annualIncomeError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
-        <div class="container-contact100-form-btn">
-          <button class="contact100-form-btn" (click)="saveQualificationDetails()">
-            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
-          </button>
+        <div class="container-contact100-form-btn" *ngIf="status == 'true'">
+          <alert type="success" [dismissible]="true">
+            <strong>Success!</strong> Saved Successfully.
+          </alert>
         </div>
 
+        <div class="container-contact100-form-btn" *ngIf="status == 'false'">
+          <alert type="warning" [dismissible]="true">
+            <strong>Warning!</strong> Something went wrong.
+          </alert>
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button *ngIf="status == '' || status == 'false'" class="contact100-form-btn"
+            (click)="saveQualificationDetails()">
+            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+
+          <button *ngIf="status == 'true'" class="contact100-form-btn" (click)="joinUs = 'step4'; this.status = ''">
+            <span> Next <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+        </div>
 
       </form>
     </div>
 
     <div class="wrap-contact100" *ngIf="joinUs == 'step4'">
-      <form class="contact100-form validate-form">
+      <form [formGroup]="dietHightUpdate" class="contact100-form validate-form">
         <span class="contact100-form-title">
           Little more about yourself
         </span>
@@ -156,82 +231,140 @@
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Body Type</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Slim</option>
-              <option>Athletic</option>
-              <option>Average</option>
-              <option>Heavy</option>
+            <select class="form-control" formControlName="bodyType" id="bodyType">
+              <option selected value="" disabled>Select Body Type</option>
+              <option value="Slim">Slim</option>
+              <option value="Athletic">Athletic</option>
+              <option value="Average">Average</option>
+              <option value="Heavy">Heavy</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="bodyTypeError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Skin Tone</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Very Fair</option>
-              <option>Fair</option>
-              <option>Tan</option>
-              <option>Dark</option>
+            <select class="form-control" formControlName="skinType" id="skinType">
+              <option selected value="" disabled>Select Skin Tone</option>
+              <option value="Very Fair">Very Fair</option>
+              <option value="Fair">Fair</option>
+              <option value="Tan">Tan</option>
+              <option value="Dark">Dark</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="skinTypeError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Do You Smoke</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>No</option>
-              <option>Yes</option>
-              <option>Occasionally</option>
+            <select class="form-control" formControlName="smokeCheck" id="smokeCheck">
+              <option selected value="" disabled>Select</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+              <option value="Occasionally">Occasionally</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="smokeCheckError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Do You Drink</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>No</option>
-              <option>Yes</option>
-              <option>Occasionally</option>
+            <select class="form-control" formControlName="drinkCheck" id="drinkCheck">
+              <option selected value="" disabled>Select</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+              <option value="Occasionally">Occasionally</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="drinkCheckError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Your Diet</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Veg</option>
-              <option>Non-Veg</option>
-              <option>Occasionally Non-Veg</option>
-              <option>Eggeterian</option>
-              <option>Vegan</option>
+            <select class="form-control" formControlName="dietCheck" id="dietCheck">
+              <option selected value="" disabled>Select</option>
+              <option value="Veg">Veg</option>
+              <option value="Non-Veg">Non-Veg</option>
+              <option value="Occasionally Non-Veg">Occasionally Non-Veg</option>
+              <option value="Eggeterian">Eggeterian</option>
+              <option value="Vegan">Vegan</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="dietCheckError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Your Height</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>4ft 5in - 134cm</option>
-              <option>4ft 6in - 137cm</option>
-              <option>4ft 7in - 140cm</option>
+            <select class="form-control" formControlName="heightCheck" id="heightCheck">
+              <option selected value="" disabled>Select</option>
+              <option value="4ft 5in - 134cm">4ft 5in - 134cm</option>
+              <option value="4ft 6in - 137cm">4ft 6in - 137cm</option>
+              <option value="4ft 7in - 140cm">4ft 7in - 140cm</option>
+              <option value="4ft 8in - 142cm">4ft 8in - 142cm</option>
+              <option value="4ft 9in - 145cm">4ft 9in - 145cm</option>
+              <option value="4ft 10in - 147cm">4ft 10in - 147cm</option>
+              <option value="4ft 11in - 150cm">4ft 11in - 150cm</option>
+              <option value="5ft 0in - 152cm">5ft 0in - 152cm</option>
+              <option value="5ft 1in - 155cm">5ft 1in - 155cm</option>
+              <option value="5ft 2in - 157cm">5ft 2in - 157cm</option>
+              <option value="5ft 3in - 160cm">5ft 3in - 160cm</option>
+              <option value="5ft 4in - 163cm">5ft 4in - 163cm</option>
+              <option value="5ft 5in - 165cm">5ft 5in - 165cm</option>
+              <option value="5ft 6in - 168cm">5ft 6in - 168cm</option>
+              <option value="5ft 7in - 170cm">5ft 7in - 170cm</option>
+              <option value="5ft 8in - 173cm">5ft 8in - 173cm</option>
+              <option value="5ft 9in - 175cm">5ft 9in - 175cm</option>
+              <option value="5ft 10in - 178cm">5ft 10in - 178cm</option>
+              <option value="5ft 11in - 180cm">5ft 11in - 180cm</option>
+              <option value="6ft 0in - 183cm">6ft 0in - 183cm</option>
+              <option value="6ft 1in - 185cm">6ft 1in - 185cm</option>
+              <option value="6ft 2in - 188cm">6ft 2in - 188cm</option>
+              <option value="6ft 3in - 191cm">6ft 3in - 191cm</option>
+              <option value="6ft 4in - 193cm">6ft 4in - 193cm</option>
+              <option value="6ft 5in - 195cm">6ft 5in - 195cm</option>
+              <option value="6ft 6in - 198cm">6ft 6in - 198cm</option>
+              <option value="6ft 7in - 201cm">6ft 7in - 201cm</option>
+              <option value="6ft 8in - 203cm">6ft 8in - 203cm</option>
+              <option value="6ft 9in - 205cm">6ft 9in - 205cm</option>
+              <option value="6ft 10in - 208cm">6ft 10in - 208cm</option>
+              <option value="6ft 11n - 210cm">6ft 11n - 210cm</option>
+              <option value="7ft 0in - 213cm">7ft 0in - 213cm</option>
+
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="heightCheckError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
+        <div class="container-contact100-form-btn" *ngIf="status == 'true'">
+          <alert type="success" [dismissible]="true">
+            <strong>Success!</strong> Saved Successfully.
+          </alert>
+        </div>
+
+        <div class="container-contact100-form-btn" *ngIf="status == 'false'">
+          <alert type="warning" [dismissible]="true">
+            <strong>Warning!</strong> Something went wrong.
+          </alert>
+        </div>
+
         <div class="container-contact100-form-btn">
-          <button class="contact100-form-btn" (click)="dietHightCheck()">
+          <button *ngIf="status == '' || status == 'false'" class="contact100-form-btn" (click)="dietHightCheck()">
             <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+
+          <button *ngIf="status == 'true'" class="contact100-form-btn" (click)="joinUs = 'step5'; this.status = ''">
+            <span> Next <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
           </button>
         </div>
 
@@ -240,90 +373,57 @@
     </div>
 
     <div class="wrap-contact100" *ngIf="joinUs == 'step5'">
-      <form class="contact100-form validate-form">
+      <form [formGroup]="aboutUser" class="contact100-form validate-form">
         <span class="contact100-form-title">
           Almost done
         </span>
 
         <div class="wrap-input100 validate-input bg1">
           <span class="label-input100">About yourself </span>
-          <textarea class="input100" id="aboutYourself" placeholder="Write about yourself"></textarea>
+          <textarea class="input100" formControlName="aboutYourself" id="aboutYourself"
+            placeholder="Write about yourself"></textarea>
+          <span *ngIf="aboutYourselfError" class="label-input100 text-danger">*Required</span>
         </div>
 
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">Physical Disability</span>
           <div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>No</option>
-              <option>Yes</option>
+            <select class="form-control" formControlName="physicalDisability" id="physicalDisability">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
             </select>
             <div class="dropDownSelect2"></div>
+            <span *ngIf="physicalDisabilityError" class="label-input100 text-danger">*Required</span>
           </div>
         </div>
 
-        <div class="container-contact100-form-btn">
-          <button class="contact100-form-btn" (click)="almostDoneDetail()">
-            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
-          </button>
+        <div class="container-contact100-form-btn" *ngIf="status == 'true'">
+          <alert type="success" [dismissible]="true">
+            <strong>Success!</strong> Saved Successfully.
+          </alert>
         </div>
 
+        <div class="container-contact100-form-btn" *ngIf="status == 'false'">
+          <alert type="warning" [dismissible]="true">
+            <strong>Warning!</strong> Something went wrong.
+          </alert>
+        </div>
+
+        <div class="container-contact100-form-btn">
+          <button *ngIf="status == '' || status == 'false'" class="contact100-form-btn" (click)="almostDoneDetail()">
+            <span> Submit <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+
+          <button *ngIf="status == 'true'" class="contact100-form-btn" (click)="wayToProfile()">
+            <span> View <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+          </button>
+        </div>
 
       </form>
     </div>
 
 
   </div>
-
-
-  <!-- <div class="container-contact100">
-    <div class="wrap-contact100">
-      <form class="contact100-form validate-form">
-        <span class="contact100-form-title">
-          Tell us about yourself
-        </span>
-
-        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
-          <span class="label-input100">State </span>
-          <input class="input100" type="text" placeholder="Enter Your Email ">
-        </div>
-
-        <div class="wrap-input100 bg1 rs1-wrap-input100">
-          <span class="label-input100">Pincode</span>
-          <input class="input100" type="text" placeholder="Enter Password">
-        </div>
-               
-
-      </form>
-    </div>
-  </div> -->
-
-
-
-
-
-  <!-- <script>
-		$(".js-select2").each(function(){
-			$(this).select2({
-				minimumResultsForSearch: 20,
-				dropdownParent: $(this).next('.dropDownSelect2')
-			});
-
-
-			$(".js-select2").each(function(){
-				$(this).on('select2:close', function (e){
-					if($(this).val() == "Please chooses") {
-						$('.js-show-service').slideUp();
-					}
-					else {
-						$('.js-show-service').slideUp();
-						$('.js-show-service').slideDown();
-					}
-				});
-			});
-		})
-	</script> -->
-
-
 
 </div>
 <app-footer></app-footer>

@@ -67,7 +67,7 @@ export class CookieService {
   }
 
   hasCookies() {
-    return this.hasItem("token") ? true : false;
+    return this.hasItem("token") && this.hasItem("userId") ? true : false;
   }
 
   hasItem(sKey) {
@@ -107,5 +107,10 @@ export class CookieService {
       (sDomain ? "; domain=" + sDomain : "") +
       (sPath ? "; path=" + sPath : "");
     return true;
+  }
+
+  logout(){
+    window.localStorage.removeItem("token");
+    this.deleteAllCookies();
   }
 }
