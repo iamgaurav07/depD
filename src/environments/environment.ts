@@ -3,10 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
-  //baseURL: "http://localhost:3000/api/",
-  baseURL: "https://gwaccobe.herokuapp.com/api/"
-  
+  production: false,
+  baseURL: "http://localhost:3000/api/"
 };
 
 /*

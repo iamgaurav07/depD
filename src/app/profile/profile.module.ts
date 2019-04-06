@@ -14,10 +14,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 
 @NgModule({
-  declarations: [HomeComponent, HeaderComponent, FooterComponent, SignUpComponent, UserProfileComponent],
+  declarations: [HomeComponent, HeaderComponent, FooterComponent, SignUpComponent, UserProfileComponent, CapitalizePipe],
   imports: [
     CommonModule,
     ProfileRoutingModule,

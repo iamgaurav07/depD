@@ -36,4 +36,8 @@ export class LoginService {
   getUserDetail(obj){
     return this.httpClient.post(environment.baseURL + 'getuser', {data: obj})
   }
+
+  getUserProfileDetails(obj){
+    return this.httpClient.post(environment.baseURL + 'getUserProfileDetails', {data: obj})
+  }
 }

@@ -1,3 +1,254 @@
 <app-header></app-header>
-<h1>User profile</h1>
+<h4 class="text-center m-top">{{userData?.name | capitalize }}'s Profile</h4>
+<div class="container emp-profile" style="border: 1px solid #eee">
+
+  <form method="post">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-img">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+            alt="" />
+          <div class="file btn btn-lg btn-primary">
+            Change Photo
+            <input type="file" name="file" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-head">
+          <h5>
+            {{userData?.name | capitalize}} {{userData?.title?.title | capitalize}}
+          </h5>
+          <h6>
+            {{userData?.educationLevel | capitalize}}
+          </h6>
+          <p class="proile-rating">Skin Tone : <span>{{userData?.skinTone | capitalize}}</span></p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#basicDetails" role="tab"
+                aria-controls="home" aria-selected="true">Basic Details</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#qualificationAndWork" role="tab"
+                aria-controls="profile" aria-selected="false">Qualification & Work</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#deitAndHeight" role="tab"
+                aria-controls="profile" aria-selected="false">Deit & Height</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-work">
+          <p>Date of Birth</p>
+          <a>{{userData?.dateOfBirth | date: 'dd-MMMM-yyyy'}}</a><br />
+          
+          <p>Joined On</p>
+          <a>{{userData?.created_on | date: 'dd-MMMM-yyyy'}}</a><br />
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="basicDetails" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Name</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.name | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Title</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.title?.title | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.userId?.email}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Gender</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.userId?.gender | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Mobile Number</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.mobileNumber}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>About</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.aboutUser | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Any Physical Disability?</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.disabilityCheck | capitalize}}</p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <label>Address</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.address | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>City</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.city | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>State</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.state | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Pincode</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.pincode}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="qualificationAndWork" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>University / School Name</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.universityName | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Education Level</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.educationLevel | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Education Field</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.educationField | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>work With</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.workWith | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Company Name</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.companyName | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Annual Income</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.annualIncome | capitalize}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="deitAndHeight" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Body Type</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.bodyType | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Skin Tone</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.skinTone | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Drink</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.drinkCheck | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Smoke</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.smokeCheck | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Diet</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.dietCheck | capitalize}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Height</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{userData?.heightCheck | capitalize}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 <app-footer></app-footer>

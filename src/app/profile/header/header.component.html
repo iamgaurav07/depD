@@ -9,10 +9,10 @@
   <div id="navbarNavDropdown" class="navbar-collapse collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link">Home <span class="sr-only">(current)</span></a>
       </li>
       <li *ngIf="userInfoCheck" class="nav-item">
-        <a class="nav-link" href="#">Find a Match</a>
+        <a class="nav-link">Find a Match</a>
       </li>
     </ul>
     <ul class="navbar-nav margin-rt">
@@ -23,7 +23,7 @@
         </a>
         <a *ngIf="userInfoCheck" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{user?.name | uppercase}} {{user?.title?.title | uppercase}}
+          {{user?.name | capitalize}} {{user?.title?.title | capitalize}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a *ngIf="userInfoCheck" class="dropdown-item" (click)="wayToAnotherComponent()">Profile</a>
