@@ -7,8 +7,8 @@
     <div class="col-md-4">
       <a (click)="fileUpload()">
         <div class="profile-img">
-          <img *ngIf="userData.profilePicUrl" src="{{userData?.profilePicUrl}}" alt="" />
-          <img *ngIf="!userData.profilePicUrl" src="../../assets/images/userDummy.png" alt="" />
+          <img *ngIf="userData && userData.profilePicUrl" src="{{userData?.profilePicUrl}}" alt="" />
+          <img *ngIf="userData && !userData.profilePicUrl" src="../../assets/images/userDummy.png" alt="" />
           <div class="file btn btn-lg btn-primary">
             Change Photo
           </div>
