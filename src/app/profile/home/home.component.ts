@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../services/login.service';
+import { CookieService } from '../../common-services/cookie.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  partners:any;
+
+  constructor(private ls: LoginService, private cs: CookieService) { }
 
   ngOnInit() {
+    if (this.cs.hasItem("userId") && this.cs.hasItem("user_id") && this.cs.hasItem("token") && this.cs.hasItem("gender")){
+      this.getPatnerListing();
+    } else {
+      this.cs.logout()
+    }
+    
+  }
+
+  getPatnerListing(){
+    let object = {
+      id: this.cs.getItem("userId"),
+      userId: this.cs.getItem("user_id"),
+      gender: this.cs.getItem("gender"),
+    }
+
+    this.ls.getPatnerListing(object).subscribe((res: any)=>{
+      if (res.success){
+        this.partners = res.data
+      } else {
+        console.log("data not found");
+      }
+    })
   }
 
 }

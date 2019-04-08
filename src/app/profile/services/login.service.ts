@@ -40,4 +40,20 @@ export class LoginService {
   getUserProfileDetails(obj){
     return this.httpClient.post(environment.baseURL + 'getUserProfileDetails', {data: obj})
   }
+
+  getPatnerListing(obj){
+    return this.httpClient.post(environment.baseURL + 'patnerListing', {data: obj})
+  }
+
+  mobileVerify(obj){
+    return this.httpClient.post(environment.baseURL + 'verifyMobile', {data: obj})
+  }
+
+  checkOtp(obj){
+    return this.httpClient.post(environment.baseURL + 'checkOtp', {data: obj})
+  }
+
+  fileUpload(obj){
+    return this.httpClient.post(environment.baseURL + 'fileUpload', obj)
+  }
 }

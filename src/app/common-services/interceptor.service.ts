@@ -7,7 +7,7 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { CookieService } from '../common-services/cookie.service';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,12 +19,16 @@ export class InterceptorService implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    request = request.clone({
+    const req = {
       setHeaders: {
         Authorization: `${this.cs.getItem("token")}`,
-        "Content-Type": `application/json`,
+        'user': `${this.cs.getItem("user_id")}`
       }
-    });
+    };
+    if(request.url != `${environment.baseURL}fileUpload`) {
+      req.setHeaders['Content-Type'] = 'application/json';
+    }
+    request = request.clone(req);
     return next.handle(request);
   }
 }

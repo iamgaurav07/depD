@@ -4,9 +4,9 @@
       <div class="hero-module--topNavWrap--JJLjM">
         <div class="logo india_logo"></div>
         <div class="hero-module--topRightNav--2eKnV">
-          <a href="javascript:void(0)" class="hero-module--login--1hnxr margin0" data-toggle="modal"
+          <a class="hero-module--login--1hnxr margin0" data-toggle="modal"
             data-target="#loginModal">Login<span class="hero-module--arrow--1Qsh6"></span></a>
-          <a href="javascript:void(0)" class="hero-module--login--1hnxr margin0" data-toggle="modal"
+          <a class="hero-module--login--1hnxr margin0" data-toggle="modal"
             data-target="#exampleModalCenter">Join us<span class="hero-module--arrow--1Qsh6"></span></a>
         </div>
       </div>
@@ -200,15 +200,17 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="loginForm">
+          <div *ngIf="emailPasswordCheck" class="form-group"><small class="form-text text-danger">Email or Password not valid</small></div>
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" class="form-control"  aria-describedby="emailHelp" placeholder="Enter email" aria-describedby="emailHelp"
               placeholder="Enter email">
-            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+              <small *ngIf="loginEmailError" class="form-text text-danger">Required</small>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" formControlName="password" id="exampleInputPassword1" placeholder="Password">
+            <small *ngIf="loginPassError" class="form-text text-danger">Required</small>
           </div>
           <div class="form-group">
             <div class="form-check form-check-inline">

@@ -385,7 +385,18 @@
           <span *ngIf="aboutYourselfError" class="label-input100 text-danger">*Required</span>
         </div>
 
-        <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <div class="input-group-prepend">
+            <span *ngIf="fileName" class="input-group-text">{{fileName}}</span>
+            <span *ngIf="!fileName" class="input-group-text">Profile Picture upload</span>
+          </div>
+          <div class="custom-file">
+            <input type="file" (change)="updateProfilePic($event)" class="custom-file-input" id="inputGroupFile01">
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+          </div>
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Physical Disability</span>
           <div>
             <select class="form-control" formControlName="physicalDisability" id="physicalDisability">
@@ -425,5 +436,33 @@
 
   </div>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Verify mobile number </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="optForm" class="form-inline">
+          <div class="form-group mx-sm-3 mb-2">
+            <label for="otp" class="sr-only">Otp </label>
+            <input type="text" formControlName="otp" class="form-control" id="otp" placeholder="1234">
+          </div>
+          <button type="button" class="btn btn-primary mb-2" (click)="verifyOtp()">Verify</button>
+        </form>
+        <span *ngIf="otpError" class="label-input100 text-danger">*Required</span>
+        <span *ngIf="otpSuccess" class="label-input100 text-success">Mobile verified</span>
+        <span *ngIf="!otpSuccess" class="label-input100 text-success">*Please enter vaild otp</span>
+
+      </div>
+    </div>
+  </div>
 </div>
 <app-footer></app-footer>

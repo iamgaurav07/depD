@@ -15,10 +15,11 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { AgePipe } from './pipes/age.pipe';
 
 
 @NgModule({
-  declarations: [HomeComponent, HeaderComponent, FooterComponent, SignUpComponent, UserProfileComponent, CapitalizePipe],
+  declarations: [HomeComponent, HeaderComponent, FooterComponent, SignUpComponent, UserProfileComponent, CapitalizePipe, AgePipe],
   imports: [
     CommonModule,
     ProfileRoutingModule,

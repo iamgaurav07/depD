@@ -29,6 +29,10 @@ export class HomeComponent implements OnInit {
   genderError: any;
   profileforError: any;
 
+  loginEmailError: any;
+  loginPassError: any;
+  emailPasswordCheck: boolean = false;
+
   ngOnInit() {
     this.getTitle();
     this.initSignUpForm();
@@ -38,8 +42,8 @@ export class HomeComponent implements OnInit {
     this.signUpForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
-      gender: ['',Validators.required],
-      profileFor: ['',Validators.required]
+      gender: ['', Validators.required],
+      profileFor: ['', Validators.required]
     })
 
     this.loginForm = this.fb.group({
@@ -65,7 +69,7 @@ export class HomeComponent implements OnInit {
     this.genderError = this.signUpForm.controls.gender.invalid;
     this.profileforError = this.signUpForm.controls.profileFor.invalid;
 
-    console.log(this.genderError, "==",this.profileforError)
+    console.log(this.genderError, "==", this.profileforError)
 
     if (!this.signupEmailError && !this.signupPassError && !this.genderError && !this.profileforError) {
       let obj = {
@@ -95,24 +99,38 @@ export class HomeComponent implements OnInit {
 
   authenticate() {
 
-    let bodyObj = this.loginForm.value
+    this.loginEmailError = this.loginForm.controls.email.invalid;
+    this.loginPassError = this.loginForm.controls.email.invalid;
 
-    this.us.authentication(bodyObj).subscribe((res: any) => {
-      if (res.success) {
-        console.log(res);
-        this.us.saveUpdateUserTokenAndDetails(res);
-        $('#loginModal').modal('hide'); $('#loginModal').modal('hide');
+    if (!this.loginEmailError && !this.loginPassError) {
 
-        if (res.user_id){
-          this.router.navigate(["/profile/findmatch"]);
+      let bodyObj = this.loginForm.value
+
+      this.us.authentication(bodyObj).subscribe((res: any) => {
+        if (res.success) {
+          console.log(res);
+          this.us.saveUpdateUserTokenAndDetails(res);
+          this.emailPasswordCheck = false;
+          $('#loginModal').modal('hide'); $('#loginModal').modal('hide');
+
+          if (res.user_id) {
+            this.router.navigate(["/profile/findmatch"]);
+          } else {
+            this.router.navigate(["/profile/signup"]);
+          }
+
         } else {
-          this.router.navigate(["/profile/signup"]);
+          if (res.code == 111 || res.code == 112){
+            this.emailPasswordCheck = true;
+            console.log("email or email not match")
+            this.cs.deleteAllCookies();
+          } 
         }
-        
-      } else {
-        this.cs.deleteAllCookies();
-      }
-    })
+      })
+
+    } else {
+      console.log("fill the form");
+    }
   }
 
   /* async saveTitleP() {

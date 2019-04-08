@@ -20,6 +20,7 @@ export class SignUpComponent implements OnInit {
   qualificationAndWorkingDetails: FormGroup;
   dietHightUpdate: FormGroup;
   aboutUser: FormGroup;
+  optForm: FormGroup;
 
   titles: any;
 
@@ -51,7 +52,12 @@ export class SignUpComponent implements OnInit {
   aboutYourselfError: any;
   physicalDisabilityError: any;
 
-  duplicateMobile:boolean = false
+  duplicateMobile: boolean = false;
+
+  fileName: any = '';
+  formD: any;
+  otpError: any;
+  otpSuccess: any;
 
   status: any = '';
 
@@ -59,7 +65,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.cs.hasItem("user_id")){
+    if (this.cs.hasItem("user_id")) {
       this.router.navigate(["/profile/findmatch"]);
     }
     this.initFormDetails();
@@ -103,6 +109,10 @@ export class SignUpComponent implements OnInit {
       aboutYourself: ['', Validators.required],
       physicalDisability: ['', Validators.required]
     })
+
+    this.optForm = this.fb.group({
+      otp: ['', Validators.required]
+    })
   }
 
   getTitle() {
@@ -123,32 +133,34 @@ export class SignUpComponent implements OnInit {
     this.mobileError = this.basicDetail.controls.mobile.invalid;
 
 
-    if (!this.nameError && !this.dateOfBirthError && !this.titleError && !this.mobileError && this.cs.hasItem("userId")) {
+    if (!this.nameError && !this.dateOfBirthError && !this.titleError && !this.mobileError && this.cs.hasItem("userId") && this.cs.hasItem("gender")) {
 
       let object = {
         name: this.basicDetail.value.name,
         title: this.basicDetail.value.title,
         dateOfBirth: this.basicDetail.value.dateOfBirth,
         mobileNumber: this.basicDetail.value.mobile,
-        userId: this.cs.getItem('userId')
+        userId: this.cs.getItem('userId'),
+        gender: this.cs.getItem('gender')
       }
 
       this.ls.saveDetails(object).subscribe((res: any) => {
         if (res.success) {
           this.userInfoId = res.data._id;
           this.duplicateMobile = false;
-        
+
           if (this.cs.hasItem("user_id")) { this.cs.removeItem("user_id", null, null) }
           this.cs.setItem("user_id", this.userInfoId, 24 * 3600, "/", null, null)
 
           this.status = "true";
         } else {
-          if (res.code == 302){
+          if (res.code == 302) {
             this.duplicateMobile = true;
           }
           this.status = "false";
         }
       })
+
     } else {
       if (!this.cs.hasItem("userId")) {
         this.cs.logout();
@@ -287,6 +299,20 @@ export class SignUpComponent implements OnInit {
       this.ls.aboutYourself(object).subscribe((res: any) => {
         if (res.success) {
           this.status = "true";
+          let object = {
+            user: res.data._id,
+            number: res.data.mobileNumber
+          }
+          this.ls.mobileVerify(object).subscribe((rs: any) => {
+            if (rs.success) {
+              if (this.cs.hasItem("mobileNumber")) { this.cs.removeItem("mobileNumber", null, null) }
+              this.cs.setItem("mobileNumber", res.data.mobileNumber, 24 * 3600, "/", null, null);
+
+              $("#otpModal").modal('show');
+            } else {
+              console.log("something went wrong");
+            }
+          })
         } else {
           this.status = "false";
         }
@@ -302,8 +328,51 @@ export class SignUpComponent implements OnInit {
 
   }
 
-  wayToProfile(){
+  updateProfilePic(event) {
+    if (event.target.files){
+      this.formD = new FormData();
+      const file: File = event.target.files[0];
+  
+      this.fileName = file.name
+      this.formD.append('file', file, file.name)
+  
+      this.ls.fileUpload(this.formD).subscribe((res: any)=>{
+        console.log("ok")
+      })
+    }
+    
+  }
+  
+  verifyOtp(){
+    this.otpError = this.optForm.controls.otp.invalid;
+
+    if (!this.otpError && this.cs.hasItem("mobileNumber")){
+
+      let obj = {
+        id: this.cs.getItem("user_id"),
+        otp: this.optForm.value.otp,
+        mobile: this.cs.getItem("mobileNumber")
+      }
+      this.ls.checkOtp(obj).subscribe((res: any)=>{
+        if (res.success){
+          console.log("verified");
+          this.otpSuccess = true;
+          setInterval(()=>{
+            $("#otpModal").modal('hide');
+            this.status = '';
+            this.router.navigate(["/profile/findmatch"]);
+          }, 2000);
+        }else {
+          this.otpSuccess = true;
+        }
+      })
+    }
+    
+  }
+
+  wayToProfile() {
     this.status = '';
+    $("#otpModal").modal('hide');
     this.router.navigate(["/profile/findmatch"]);
   }
 
