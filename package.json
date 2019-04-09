@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build",
+    "build:p": "ng build --prod && firebase deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
