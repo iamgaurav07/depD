@@ -9,21 +9,21 @@
   <div id="navbarNavDropdown" class="navbar-collapse collapse">
     <ul class="navbar-nav mr-auto">
       <li *ngIf="userInfoCheck" class="nav-item">
-        <a class="nav-link">Find a Match</a>
+        <button (click)="wayToFindMatch()" class="nav-link">Find a Match</button>
       </li>
     </ul>
     <ul class="navbar-nav margin-rt">
       <li class="nav-item dropdown">
-        <a *ngIf="!userInfoCheck" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+        <button *ngIf="!userInfoCheck" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           User
-        </a>
-        <a *ngIf="userInfoCheck" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+      </button>
+        <button *ngIf="userInfoCheck" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{user?.name | capitalize}} {{user?.title?.title | capitalize}}
-        </a>
+        </button>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a *ngIf="userInfoCheck" class="dropdown-item" (click)="wayToAnotherComponent()">Profile</a>
+          <button *ngIf="userInfoCheck" class="dropdown-item" (click)="wayToAnotherComponent()">Profile</button>
           <a class="dropdown-item" (click)="logout()" href="#">Logout</a>
         </div>
       </li>

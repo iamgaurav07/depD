@@ -9,29 +9,31 @@ import { CookieService } from '../../common-services/cookie.service';
 })
 export class HomeComponent implements OnInit {
 
-  partners:any;
+  partners: any;
+  loader: boolean = true;
 
   constructor(private ls: LoginService, private cs: CookieService) { }
 
   ngOnInit() {
-    if (this.cs.hasItem("userId") && this.cs.hasItem("user_id") && this.cs.hasItem("token") && this.cs.hasItem("gender")){
+    if (this.cs.hasItem("userId") && this.cs.hasItem("user_id") && this.cs.hasItem("token") && this.cs.hasItem("gender")) {
       this.getPatnerListing();
     } else {
       this.cs.logout()
     }
-    
+
   }
 
-  getPatnerListing(){
+  getPatnerListing() {
     let object = {
       id: this.cs.getItem("userId"),
       userId: this.cs.getItem("user_id"),
       gender: this.cs.getItem("gender"),
     }
 
-    this.ls.getPatnerListing(object).subscribe((res: any)=>{
-      if (res.success){
-        this.partners = res.data
+    this.ls.getPatnerListing(object).subscribe((res: any) => {
+      if (res.success) {
+        this.partners = res.data;
+        this.loader = false;
       } else {
         console.log("data not found");
       }

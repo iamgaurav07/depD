@@ -26,8 +26,12 @@ export class HeaderComponent implements OnInit {
   }
 
   wayToAnotherComponent(){
-      this.router.navigate(["/profile/userprofile"]);    
+     return this.router.navigate(["/profile/userprofile"]);    
   }
+
+  wayToFindMatch(){
+   return this.router.navigate(["/profile/findmatch"]);    
+}
 
   getUser(){
     if (this.cs.hasItem("token") && this.cs.hasItem("userId") && this.cs.hasItem("user_id")){

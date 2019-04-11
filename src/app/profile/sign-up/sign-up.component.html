@@ -1,4 +1,6 @@
 <app-header></app-header>
+<ng-container *ngIf="loader"><app-loader></app-loader></ng-container>
+
 <div class="container-fluid">
 
   <div class="container-contact100">
@@ -59,7 +61,6 @@
           </button>
         </div>
 
-
       </form>
     </div>
 
@@ -75,16 +76,28 @@
           <span *ngIf="addressError" class="label-input100 text-danger">*Required</span>
         </div>
 
-        <div class="wrap-input100 bg1 rs1-wrap-input100">
-          <span class="label-input100">City</span>
-          <input type="text" class="input100" id="city" formControlName="city" placeholder="Enter City">
-          <span *ngIf="cityError" class="label-input100 text-danger">*Required</span>
-        </div>
-
         <div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
           <span class="label-input100">State </span>
-          <input type="text" class="input100" id="state" formControlName="state" placeholder="Enter State">
-          <span *ngIf="stateError" class="label-input100 text-danger">*Required</span>
+          <div>
+            <select class="form-control" formControlName="state" (change)="getCity($event.target.value)" id="state">
+              <option selected value="" disabled>Select State</option>
+              <option *ngFor="let state of states" value="{{state._id}}">{{state.name}}</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+            <span *ngIf="stateError" class="label-input100 text-danger">*Required</span>
+          </div>
+        </div>
+
+        <div class="wrap-input100 bg1 rs1-wrap-input100">
+          <span class="label-input100">City</span>
+          <div>
+            <select class="form-control" formControlName="city" id="city">
+              <option selected value="" disabled>Select City</option>
+              <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+            <span *ngIf="cityError" class="label-input100 text-danger">*Required</span>
+          </div>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
@@ -386,14 +399,14 @@
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
-          <div class="input-group-prepend">
-            <span *ngIf="fileName" class="input-group-text">{{fileName}}</span>
-            <span *ngIf="!fileName" class="input-group-text">Profile Picture upload</span>
+          <div *ngIf="fileName" class="input-group-prepend">
+            <span class="input-group-text">{{fileName}}</span>
           </div>
           <div class="custom-file">
             <input type="file" (change)="updateProfilePic($event)" class="custom-file-input" id="inputGroupFile01">
             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
           </div>
+          <span *ngIf="isPicUpload" class="input-group-text text-success">File uploaded</span>
         </div>
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">

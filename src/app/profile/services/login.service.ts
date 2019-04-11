@@ -56,4 +56,13 @@ export class LoginService {
   fileUpload(obj){
     return this.httpClient.post(environment.baseURL + 'fileUpload', obj)
   }
+
+  getAllStates(){
+    return this.httpClient.post(environment.baseURL + 'getAllStates',{})
+  }
+
+  getCities(obj){
+    return this.httpClient.post(environment.baseURL + 'getCities',{id:obj})
+  }
+  
 }

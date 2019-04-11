@@ -60,6 +60,12 @@ export class SignUpComponent implements OnInit {
   otpSuccess: any;
 
   status: any = '';
+  states: any = [];
+  cities: any = [];
+
+  loader: boolean = true;
+
+  isPicUpload: boolean = false;
 
   constructor(private router: Router, private fb: FormBuilder, private ls: LoginService, private cs: CookieService) { }
 
@@ -70,6 +76,7 @@ export class SignUpComponent implements OnInit {
     }
     this.initFormDetails();
     this.getTitle();
+    this.getAllState();
   }
 
   initFormDetails() {
@@ -80,13 +87,21 @@ export class SignUpComponent implements OnInit {
       mobile: ['', Validators.required]
     })
 
+    this.optForm = this.fb.group({
+      otp: ['', Validators.required]
+    })
+  }
+
+  initAddressForm() {
     this.addressDetail = this.fb.group({
       address: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
       pincode: ['', Validators.required]
     })
+  }
 
+  initqualificationAndWorkingDetailsForm() {
     this.qualificationAndWorkingDetails = this.fb.group({
       collegeName: ['', Validators.required],
       educationLevel: ['', Validators.required],
@@ -95,7 +110,17 @@ export class SignUpComponent implements OnInit {
       companyName: ['', Validators.required],
       annualIncome: ['', Validators.required]
     })
+  }
 
+  initaboutUserForm() {
+    this.aboutUser = this.fb.group({
+      aboutYourself: ['', Validators.required],
+      physicalDisability: ['', Validators.required]
+    })
+  }
+
+
+  dietHightUpdateForm() {
     this.dietHightUpdate = this.fb.group({
       bodyType: ['', Validators.required],
       skinType: ['', Validators.required],
@@ -104,22 +129,16 @@ export class SignUpComponent implements OnInit {
       dietCheck: ['', Validators.required],
       heightCheck: ['', Validators.required]
     })
-
-    this.aboutUser = this.fb.group({
-      aboutYourself: ['', Validators.required],
-      physicalDisability: ['', Validators.required]
-    })
-
-    this.optForm = this.fb.group({
-      otp: ['', Validators.required]
-    })
   }
 
   getTitle() {
+    this.loader = true;
     this.ls.getKambojTitles().subscribe((res: any) => {
       if (res.success) {
+        this.loader = false;
         this.titles = res.message;
       } else {
+        this.loader = false;
         console.log("something went wrong")
       }
     })
@@ -134,6 +153,7 @@ export class SignUpComponent implements OnInit {
 
 
     if (!this.nameError && !this.dateOfBirthError && !this.titleError && !this.mobileError && this.cs.hasItem("userId") && this.cs.hasItem("gender")) {
+      this.loader = true;
 
       let object = {
         name: this.basicDetail.value.name,
@@ -151,22 +171,21 @@ export class SignUpComponent implements OnInit {
 
           if (this.cs.hasItem("user_id")) { this.cs.removeItem("user_id", null, null) }
           this.cs.setItem("user_id", this.userInfoId, 24 * 3600, "/", null, null)
-
+          this.initAddressForm();
           this.status = "true";
+          this.loader = false;
         } else {
           if (res.code == 302) {
             this.duplicateMobile = true;
+            this.loader = false;
           }
           this.status = "false";
+          this.loader = false;
         }
       })
 
     } else {
-      if (!this.cs.hasItem("userId")) {
-        this.cs.logout();
-      } else {
-        console.log("fill the form");
-      }
+      this.loader = false;
     }
 
   }
@@ -179,7 +198,7 @@ export class SignUpComponent implements OnInit {
     this.pincodeError = this.addressDetail.controls.pincode.invalid;
 
     if (!this.addressError && !this.cityError && !this.stateError && !this.pincodeError && this.cs.hasItem("user_id")) {
-
+      this.loader = true;
       let object = {
         address: this.addressDetail.value.address,
         city: this.addressDetail.value.city,
@@ -191,23 +210,21 @@ export class SignUpComponent implements OnInit {
       this.ls.updateAddress(object).subscribe((res: any) => {
         if (res.success) {
           this.status = "true";
+          this.initqualificationAndWorkingDetailsForm()
+          this.loader = false;
         } else {
           this.status = "false";
+          this.loader = false;
         }
       })
 
     } else {
-      if (!this.cs.hasItem("userId") || this.cs.hasItem("user_id")) {
-        this.cs.logout();
-      } else {
-        console.log("fill the form");
-      }
+      this.loader = false;
     }
 
   }
 
   saveQualificationDetails() {
-
     this.collegeNameError = this.qualificationAndWorkingDetails.controls.collegeName.invalid;
     this.educationLevelError = this.qualificationAndWorkingDetails.controls.educationLevel.invalid;
     this.educationFieldError = this.qualificationAndWorkingDetails.controls.educationField.invalid;
@@ -216,7 +233,7 @@ export class SignUpComponent implements OnInit {
     this.annualIncomeError = this.qualificationAndWorkingDetails.controls.annualIncome.invalid;
 
     if (!this.collegeNameError && !this.educationLevelError && !this.educationFieldError && !this.workWithError && !this.companyNameError && !this.annualIncomeError && this.cs.hasItem("user_id")) {
-
+      this.loader = true;
       let object = {
         collegeName: this.qualificationAndWorkingDetails.value.collegeName,
         educationLevel: this.qualificationAndWorkingDetails.value.educationLevel,
@@ -230,22 +247,23 @@ export class SignUpComponent implements OnInit {
       this.ls.updateQualification(object).subscribe((res: any) => {
         if (res.success) {
           this.status = "true";
+          this.dietHightUpdateForm();
+          this.loader = false;
         } else {
           this.status = "false";
+          this.loader = false;
         }
       })
 
     } else {
-      if (!this.cs.hasItem("userId") || this.cs.hasItem("user_id")) {
-        this.cs.logout();
-      } else {
-        console.log("fill the form");
-      }
+      console.log("fill the form");
+      this.loader = false;
     }
 
   }
 
   dietHightCheck() {
+
     this.bodyTypeError = this.dietHightUpdate.controls.bodyType.invalid;
     this.skinTypeError = this.dietHightUpdate.controls.skinType.invalid;
     this.smokeCheckError = this.dietHightUpdate.controls.smokeCheck.invalid;
@@ -254,7 +272,7 @@ export class SignUpComponent implements OnInit {
     this.heightCheckError = this.dietHightUpdate.controls.heightCheck.invalid;
 
     if (!this.bodyTypeError && !this.skinTypeError && !this.smokeCheckError && !this.drinkCheckError && !this.dietCheckError && !this.heightCheckError && this.cs.hasItem("user_id")) {
-
+      this.loader = true;
       let object = {
         bodyType: this.dietHightUpdate.value.bodyType,
         skinType: this.dietHightUpdate.value.skinType,
@@ -269,17 +287,16 @@ export class SignUpComponent implements OnInit {
       this.ls.updateDietHeight(object).subscribe((res: any) => {
         if (res.success) {
           this.status = "true";
+          this.initaboutUserForm();
+          this.loader = false;
         } else {
           this.status = "false";
+          this.loader = false;
         }
       })
 
     } else {
-      if (!this.cs.hasItem("userId") || this.cs.hasItem("user_id")) {
-        this.cs.logout();
-      } else {
-        console.log("fill the form");
-      }
+        this.loader = false;
     }
   }
 
@@ -289,7 +306,7 @@ export class SignUpComponent implements OnInit {
     this.physicalDisabilityError = this.aboutUser.controls.physicalDisability.invalid;
 
     if (!this.aboutYourselfError && !this.physicalDisabilityError && this.cs.hasItem("user_id")) {
-
+      this.loader = true;
       let object = {
         aboutYourself: this.aboutUser.value.aboutYourself,
         physicalDisability: this.aboutUser.value.physicalDisability,
@@ -307,73 +324,107 @@ export class SignUpComponent implements OnInit {
             if (rs.success) {
               if (this.cs.hasItem("mobileNumber")) { this.cs.removeItem("mobileNumber", null, null) }
               this.cs.setItem("mobileNumber", res.data.mobileNumber, 24 * 3600, "/", null, null);
+              this.loader = false;
 
               $("#otpModal").modal('show');
             } else {
-              console.log("something went wrong");
+              this.loader = false;
             }
           })
         } else {
           this.status = "false";
+          this.loader = false;
         }
       })
 
     } else {
-      if (!this.cs.hasItem("userId") || this.cs.hasItem("user_id")) {
-        this.cs.logout();
-      } else {
-        console.log("fill the form");
-      }
+        this.loader = false;
     }
 
   }
 
   updateProfilePic(event) {
-    if (event.target.files){
+    if (event.target.files) {
+      this.loader = true;
       this.formD = new FormData();
       const file: File = event.target.files[0];
-  
+
       this.fileName = file.name
       this.formD.append('file', file, file.name)
-  
-      this.ls.fileUpload(this.formD).subscribe((res: any)=>{
-        console.log("ok")
+
+      this.ls.fileUpload(this.formD).subscribe((res: any) => {
+        if (res.success) {
+          this.isPicUpload = true;
+          this.loader = false;
+        } else {
+          this.loader = false;
+        }
       })
     }
-    
+
   }
-  
-  verifyOtp(){
+
+  verifyOtp() {
     this.otpError = this.optForm.controls.otp.invalid;
 
-    if (!this.otpError && this.cs.hasItem("mobileNumber")){
-
+    if (!this.otpError && this.cs.hasItem("mobileNumber")) {
+      this.loader = true;
       let obj = {
         id: this.cs.getItem("user_id"),
         otp: this.optForm.value.otp,
         mobile: this.cs.getItem("mobileNumber")
       }
-      this.ls.checkOtp(obj).subscribe((res: any)=>{
-        if (res.success){
+      this.ls.checkOtp(obj).subscribe((res: any) => {
+        if (res.success) {
           console.log("verified");
           this.otpSuccess = true;
-          setInterval(()=>{
+          setInterval(() => {
             $("#otpModal").modal('hide');
             this.status = '';
+            this.loader = false;
             this.router.navigate(["/profile/findmatch"]);
           }, 2000);
-        }else {
+        } else {
           this.otpSuccess = true;
+          this.loader = false;
         }
       })
     }
-    
+
   }
 
   wayToProfile() {
     this.status = '';
     $("#otpModal").modal('hide');
     this.router.navigate(["/profile/findmatch"]);
+  }
+
+  async getAllState() {
+    this.loader = true;
+    await this.ls.getAllStates().subscribe((res: any) => {
+      if (res.success) {
+        this.loader = false;
+        this.states = res.message
+      } else {
+        this.loader = false;
+      }
+
+    })
+  }
+
+  async getCity(value) {
+    console.log("asdf");
+    this.loader = true;
+    await this.ls.getCities(value).subscribe((res: any) => {
+      this.cities = [];
+      if (res.success) {
+        this.loader = false;
+        this.cities = res.message
+      } else {
+        this.loader = false;
+      }
+
+    })
   }
 
 }
