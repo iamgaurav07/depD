@@ -17,10 +17,11 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { AgePipe } from './pipes/age.pipe';
 import { LoaderComponent } from './loader/loader.component';
+import { UpgradeAccountComponent } from './upgrade-account/upgrade-account.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, HeaderComponent, FooterComponent, SignUpComponent, UserProfileComponent, CapitalizePipe, AgePipe, LoaderComponent],
+  declarations: [HomeComponent, HeaderComponent, FooterComponent, SignUpComponent, UserProfileComponent, CapitalizePipe, AgePipe, LoaderComponent, UpgradeAccountComponent],
   imports: [
     CommonModule,
     ProfileRoutingModule,

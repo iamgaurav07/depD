@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { CookieService } from '../../common-services/cookie.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ export class HomeComponent implements OnInit {
   partners: any;
   loader: boolean = true;
 
-  constructor(private ls: LoginService, private cs: CookieService) { }
+  constructor(private ls: LoginService, private cs: CookieService, private router: Router) { }
 
   ngOnInit() {
     if (this.cs.hasItem("userId") && this.cs.hasItem("user_id") && this.cs.hasItem("token") && this.cs.hasItem("gender")) {
@@ -38,6 +39,11 @@ export class HomeComponent implements OnInit {
         console.log("data not found");
       }
     })
+  }
+
+  toUpgrade(){
+    console.log("working");
+    this.router.navigate(["profile/upgradeaccount"])
   }
 
 }

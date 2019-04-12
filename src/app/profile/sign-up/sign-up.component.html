@@ -102,8 +102,8 @@
 
         <div class="wrap-input100 bg1 rs1-wrap-input100">
           <span class="label-input100">Pincode</span>
-          <input type="text" class="input100" id="pincode" formControlName="pincode" placeholder="Enter Pincode">
-          <span *ngIf="pincodeError" class="label-input100 text-danger">*Required</span>
+          <input type="text" class="input100" pattern="^(\d *){6}$" id="pincode" formControlName="pincode" placeholder="Enter Pincode">
+          <span *ngIf="pincodeError" class="label-input100 text-danger">*Required or Should be 6 digit</span>
         </div>
 
         <div *ngIf="status == 'true'">

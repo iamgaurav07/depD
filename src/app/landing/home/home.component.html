@@ -148,7 +148,7 @@
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" formControlName="password" class="form-control" id="password" placeholder="Password">
-              <small *ngIf="signupPassError" class="form-text text-danger">Required</small>
+              <small *ngIf="signupPassError" class="form-text text-danger">Required or Min 6 letters Required</small>
             </div>
             <div class="form-group">
               <div class="form-check form-check-inline">
@@ -166,6 +166,7 @@
             <div class="form-group">
               <label for="exampleFormControlSelect1">Create profile for</label>
               <select class="form-control" formControlName="profileFor" id="exampleFormControlSelect1">
+                <option value="" disabled>Select</option>
                 <option value="self">Self</option>
                 <option value="son">Son</option>
                 <option value="daughter">Daughter</option>
@@ -205,7 +206,7 @@
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email" pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" class="form-control"  aria-describedby="emailHelp" placeholder="Enter email" aria-describedby="emailHelp"
               placeholder="Enter email">
-              <small *ngIf="loginEmailError" class="form-text text-danger">Required</small>
+              <small *ngIf="loginEmailError" class="form-text text-danger">*Required or Enter valid email.</small>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>

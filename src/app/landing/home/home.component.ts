@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   initSignUpForm() {
     this.signUpForm = this.fb.group({
       email: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       gender: ['', Validators.required],
       profileFor: ['', Validators.required]
     })
@@ -68,8 +68,6 @@ export class HomeComponent implements OnInit {
     this.signupPassError = this.signUpForm.controls.password.invalid;
     this.genderError = this.signUpForm.controls.gender.invalid;
     this.profileforError = this.signUpForm.controls.profileFor.invalid;
-
-    console.log(this.genderError, "==", this.profileforError)
 
     if (!this.signupEmailError && !this.signupPassError && !this.genderError && !this.profileforError) {
       let obj = {

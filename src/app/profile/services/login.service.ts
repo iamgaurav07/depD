@@ -64,5 +64,13 @@ export class LoginService {
   getCities(obj){
     return this.httpClient.post(environment.baseURL + 'getCities',{id:obj})
   }
+
+  updateBasicDetails(obj){
+    return this.httpClient.post(environment.baseURL + 'updateBasicDetails',{data:obj})
+  }
+
+  makepayment(){
+    return this.httpClient.post(environment.baseURL + 'makepayment',{})
+  }
   
 }

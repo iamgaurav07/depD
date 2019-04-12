@@ -2,291 +2,587 @@
 <ng-container *ngIf="loader">
   <app-loader></app-loader>
 </ng-container>
-<ng-container *ngIf="!loader">
-  <h4 class="text-center m-top">{{userData?.name | capitalize }}'s Profile</h4>
-  <div class="container emp-profile" style="border: 1px solid #eee">
+<ng-container *ngIf="updateLoader">
+  <app-loader></app-loader>
+</ng-container>
+<h4 class="text-center m-top">{{userData?.name | capitalize }}'s Profile</h4>
+<div class="container emp-profile" style="border: 1px solid #eee">
 
 
-    <div class="row">
-      <div class="col-md-4">
-        <a (click)="fileUpload()">
-          <div class="profile-img">
-            <img *ngIf="userData && userData.profilePicUrl" src="{{userData?.profilePicUrl}}" alt="" />
-            <img *ngIf="userData && !userData.profilePicUrl" src="../../assets/images/userDummy.png" alt="" />
-            <div class="file btn btn-lg btn-primary">
-              Change Photo
-            </div>
+  <div class="row">
+    <div class="col-md-4">
+      <a (click)="fileUpload()">
+        <div class="profile-img">
+          <img *ngIf="userData && userData.profilePicUrl" src="{{userData?.profilePicUrl}}" alt="" />
+          <img *ngIf="userData && !userData.profilePicUrl" src="../../assets/images/userDummy.png" alt="" />
+          <div class="file btn btn-lg btn-primary">
+            Change Photo
           </div>
-        </a>
-      </div>
-      <div class="col-md-6">
-        <div class="profile-head">
-          <h5>
-            {{userData?.name | capitalize}} {{userData?.title?.title | capitalize}}
-          </h5>
-          <h6>
-            {{userData?.educationLevel | capitalize}}
-          </h6>
-          <p class="proile-rating">Skin Tone : <span>{{userData?.skinTone | capitalize}}</span></p>
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#basicDetails" role="tab"
-                aria-controls="home" aria-selected="true">Basic Details</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#qualificationAndWork" role="tab"
-                aria-controls="profile" aria-selected="false">Qualification & Work</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#deitAndHeight" role="tab"
-                aria-controls="profile" aria-selected="false">Deit & Height</a>
-            </li>
-          </ul>
         </div>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <div class="profile-head">
+        <h5>
+          {{userData?.name | capitalize}} {{userData?.title?.title | capitalize}}
+        </h5>
+        <h6>
+          {{userData?.educationLevel | capitalize}}
+        </h6>
+        <p class="proile-rating">Skin Tone : <span>{{userData?.skinTone | capitalize}}</span></p>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#basicDetails" role="tab"
+              aria-controls="home" aria-selected="true">Basic Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#qualificationAndWork" role="tab"
+              aria-controls="profile" aria-selected="false">Qualification & Work</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#deitAndHeight" role="tab"
+              aria-controls="profile" aria-selected="false">Deit & Height</a>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="profile-work">
-          <p>Date of Birth</p>
-          <a>{{userData?.dateOfBirth | date: 'dd-MMMM-yyyy'}}</a><br />
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="profile-work">
+        <p>Date of Birth</p>
+        <a>{{userData?.dateOfBirth | date: 'dd-MMMM-yyyy'}}</a><br />
 
-          <p>Joined On</p>
-          <a>{{userData?.created_on | date: 'dd-MMMM-yyyy'}}</a><br />
-        </div>
+        <p>Joined On</p>
+        <a>{{userData?.created_on | date: 'dd-MMMM-yyyy'}}</a><br />
       </div>
-      <div class="col-md-8">
-        <div class="tab-content profile-tab" id="myTabContent">
-          <div class="tab-pane fade show active" id="basicDetails" role="tabpanel" aria-labelledby="home-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Name</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.name | capitalize}}</p>
-              </div>
+    </div>
+    <div class="col-md-8">
+      <div class="tab-content profile-tab" id="myTabContent">
+        <div class="tab-pane fade show active" id="basicDetails" role="tabpanel" aria-labelledby="home-tab">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Edit Details
+          </button>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Name</label>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Title</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.title?.title | capitalize}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Email</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.userId?.email}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Gender</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.userId?.gender | capitalize}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Mobile Number</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.mobileNumber}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>About</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.aboutUser | capitalize}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Any Physical Disability?</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.disabilityCheck | capitalize}}</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6">
-                <label>Address</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.address | capitalize}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>City</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.city | capitalize}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>State</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.state | capitalize}}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Pincode</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.pincode}}</p>
-              </div>
+            <div class="col-md-6">
+              <p>{{userData?.name | capitalize}}</p>
             </div>
           </div>
-          <div class="tab-pane fade" id="qualificationAndWork" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>University / School Name</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.universityName | capitalize}}</p>
-              </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Title</label>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Education Level</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.educationLevel | capitalize}}</p>
-              </div>
+            <div class="col-md-6">
+              <p>{{userData?.title?.title | capitalize}}</p>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Education Field</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.educationField | capitalize}}</p>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Email</label>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>work With</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.workWith | capitalize}}</p>
-              </div>
+            <div class="col-md-6">
+              <p>{{userData?.userId?.email}}</p>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Company Name</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.companyName | capitalize}}</p>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Gender</label>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Annual Income</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.annualIncome | capitalize}}</p>
-              </div>
+            <div class="col-md-6">
+              <p>{{userData?.userId?.gender | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Mobile Number</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.mobileNumber}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>About</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.aboutUser | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Any Physical Disability?</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.disabilityCheck | capitalize}}</p>
             </div>
           </div>
 
-          <div class="tab-pane fade" id="deitAndHeight" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-              <div class="col-md-6">
-                <label>Body Type</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.bodyType | capitalize}}</p>
-              </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Address</label>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Skin Tone</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.skinTone | capitalize}}</p>
-              </div>
+            <div class="col-md-6">
+              <p>{{userData?.address | capitalize}}</p>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Drink</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.drinkCheck | capitalize}}</p>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>City</label>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Smoke</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.smokeCheck | capitalize}}</p>
-              </div>
+            <div class="col-md-6">
+              <p>{{userData?.city?.name | capitalize}}</p>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Diet</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.dietCheck | capitalize}}</p>
-              </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>State</label>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label>Height</label>
-              </div>
-              <div class="col-md-6">
-                <p>{{userData?.heightCheck | capitalize}}</p>
-              </div>
+            <div class="col-md-6">
+              <p>{{userData?.state?.name | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Pincode</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.pincode}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="qualificationAndWork" role="tabpanel" aria-labelledby="profile-tab">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workQualification">
+            Edit Details
+          </button>
+          <div class="row">
+            <div class="col-md-6">
+              <label>University / School Name</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.universityName | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Education Level</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.educationLevel | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Education Field</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.educationField | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>work With</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.workWith | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Company Name</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.companyName | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Annual Income</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.annualIncome | capitalize}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="deitAndHeight" role="tabpanel" aria-labelledby="profile-tab">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dietHightCheck">
+            Edit Details
+          </button>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Body Type</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.bodyType | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Skin Tone</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.skinTone | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Drink</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.drinkCheck | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Smoke</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.smokeCheck | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Diet</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.dietCheck | capitalize}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Height</label>
+            </div>
+            <div class="col-md-6">
+              <p>{{userData?.heightCheck }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Update image</h5>
-          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<!-- Modal -->
+<div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Update image</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button> -->
-        </div>
-        <form>
-          <div class="modal-body">
+      </div>
+      <form>
+        <div class="modal-body">
 
-            <div class="input-group mb-3">
-              <div *ngIf="fileName" class="input-group-prepend">
-                <span class="input-group-text">{{fileName}}</span>
-              </div>
-              <div class="custom-file">
-                <input type="file" (change)="updateProfilePic($event)" class="custom-file-input" id="inputGroupFile01">
-                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-              </div>
+          <div class="input-group mb-3">
+            <div *ngIf="fileName" class="input-group-prepend">
+              <span class="input-group-text">{{fileName}}</span>
             </div>
-            <span *ngIf="isFileUploaded" class="input-group-text text-success">File uploaded</span>
+            <div class="custom-file">
+              <input type="file" (change)="updateProfilePic($event)" class="custom-file-input" id="inputGroupFile01">
+              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" (click)="upload()" class="btn btn-primary">Upload Image</button>
+          <span *ngIf="isFileUploaded" class="input-group-text text-success">File uploaded</span>
+          <span *ngIf="fileSizeCheck" class="input-group-text text-danger">Image size should be less than 2mb</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="upload()" class="btn btn-primary">Upload Image</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Edit profile -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Update Basic Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="basicDetail">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter Name">
+            <small *ngIf="nameError" class="form-text text-danger">*Required.</small>
           </div>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <select class="form-control" formControlName="title">
+              <option value="" disabled selected>Select Title</option>
+              <option *ngFor="let title of titles" value="{{title._id}}">{{title.title}}</option>
+            </select>
+            <small *ngIf="titleError" class="form-text text-danger">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" formControlName="email"
+              pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+              class="form-control" id="email" placeholder="Enter Email">
+            <small *ngIf="emailError" class="form-text text-danger">Required or Enter valid email.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Gender</label>
+            <input type="text" formControlName="gender" class="form-control" id="gender" placeholder="Enter Name">
+            <small *ngIf="genderError" class="form-text text-danger">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="mobile">MobileNumber</label>
+            <input type="text" formControlName="mobile" class="form-control" id="mobile"
+              placeholder="Enter Mobile NUmber">
+            <small class="form-text text-danger" *ngIf="mobileError">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Address</label>
+            <input type="text" formControlName="address" class="form-control" id="address" placeholder="Enter Name">
+            <small class="form-text text-danger" *ngIf="addressError">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">State</label>
+            <select class="form-control" formControlName="state" (change)="getCity($event.target.value)" id="state">
+              <option *ngFor="let state of states" value="{{state._id}}">{{state.name}}</option>
+            </select>
+            <div class="dropDownSelect2"></div>
+            <small class="form-text text-danger" *ngIf="stateError">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">City</label>
+            <select class="form-control" formControlName="city" id="city">
+              <option *ngFor="let city of cities" value="{{city._id}}">{{city.name}}</option>
+            </select>
+            <small *ngIf="cityError" class="form-text text-danger">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="pincode">Pincode</label>
+            <input type="text" formControlName="pincode" pattern="^(\d *){6}$" class="form-control" id="pincode"
+              placeholder="Enter Pincode">
+            <small *ngIf="pincodeError" id="pincode" class="form-text text-danger">*Required or Should be 6
+              digit.</small>
+          </div>
+          <div class="form-group">
+            <label for="about">About</label>
+            <input type="text" formControlName="about" class="form-control" id="about" placeholder="Enter Name">
+            <small id="about" *ngIf="aboutError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <button class="btn btn-primary" (click)="basiceDetailsUpdate()">Update</button>
         </form>
       </div>
     </div>
   </div>
+</div>
 
-</ng-container>
+<!-- Modal Edit Work Qualification -->
+<div class="modal fade" id="workQualification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Update work & Qualification</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="workQualificationForm">
+          <div class="form-group">
+            <label for="name">University / School Name</label>
+            <input type="text" formControlName="collegeName" class="form-control" id="name"
+              placeholder="University / College Name">
+            <small *ngIf="collegeNameError" class="form-text text-danger">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="educationLevel">Education Level</label>
+            <select class="form-control" formControlName="educationLevel" id="educationLevel">
+              <option selected value="" disabled>Select Education level</option>
+              <option value="Doctrate">Doctrate</option>
+              <option value="Masters">Masters</option>
+              <option value="Honours Degree">Honours Degree</option>
+              <option value="Bechlors">Bechlors</option>
+              <option value="Ungraduate">Ungraduate</option>
+              <option value="Diploma">Diploma</option>
+              <option value="High School">High School</option>
+              <option value="Less Than High School">Less Than High School</option>
+              <option value="Trade School">Trade School</option>
+            </select>
+            <small *ngIf="educationLevelError" class="form-text text-danger">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="name">Education Field</label>
+            <input type="text" formControlName="educationField" id="educationField" placeholder="Education field"
+              class="form-control">
+            <small *ngIf="educationFieldError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Work With</label>
+            <select class="form-control" formControlName="workWith" id="workWith">
+              <option selected value="" disabled>Select Work with</option>
+              <option value="Private Company">Private Company</option>
+              <option value="Goverment / Public Sector">Goverment / Public Sector</option>
+              <option value="Defence / Civil Services">Defence / Civil Services</option>
+              <option value="Business / Self Employes">Business / Self Employes</option>
+              <option value="Not Working">Not Working</option>
+            </select>
+            <small *ngIf="workWithError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Organisation Name</label>
+            <input type="text" formControlName="companyName" id="companyName" placeholder="Organisation Name"
+              class="form-control">
+            <small *ngIf="companyNameError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Annual Income</label>
+            <select class="form-control" formControlName="annualIncome" id="annualIncome">
+              <option selected value="" disabled>Annual Income</option>
+              <option value="Less than 2 Lakh">Less than 2 Lakh</option>
+              <option value="Between 2 than 5 Lakh">Between 2 than 5 Lakh</option>
+              <option value="Between 5 than 8 Lakh">Between 5 than 8 Lakh</option>
+              <option value="More than 8 Lakh">More than 8 Lakh</option>
+            </select>
+            <small *ngIf="annualIncomeError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <button class="btn btn-primary" (click)="workQualificationUpdate()">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Work Qualificatiom End  -->
+
+<!-- Modal Edit Diet -->
+<div class="modal fade" id="dietHightCheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Update work & Qualification</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="dietHightUpdate">
+          <div class="form-group">
+            <label for="name">Body Type</label>
+            <select class="form-control" formControlName="bodyType" id="bodyType">
+              <option selected value="" disabled>Select Body Type</option>
+              <option value="Slim">Slim</option>
+              <option value="Athletic">Athletic</option>
+              <option value="Average">Average</option>
+              <option value="Heavy">Heavy</option>
+            </select>
+            <small *ngIf="bodyTypeError" class="form-text text-danger">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="educationLevel">Skin Tone</label>
+            <select class="form-control" formControlName="skinType" id="skinType">
+              <option selected value="" disabled>Select Skin Tone</option>
+              <option value="Very Fair">Very Fair</option>
+              <option value="Fair">Fair</option>
+              <option value="Tan">Tan</option>
+              <option value="Dark">Dark</option>
+            </select>
+            <small *ngIf="skinTypeError" class="form-text text-danger">*Required.</small>
+          </div>
+          <div class="form-group">
+            <label for="name">Do You Smoke</label>
+            <select class="form-control" formControlName="smokeCheck" id="smokeCheck">
+              <option selected value="" disabled>Select</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+              <option value="Occasionally">Occasionally</option>
+            </select>
+            <small *ngIf="smokeCheckError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Do You Drink</label>
+            <select class="form-control" formControlName="drinkCheck" id="drinkCheck">
+              <option selected value="" disabled>Select</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+              <option value="Occasionally">Occasionally</option>
+            </select>
+            <small *ngIf="drinkCheckError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Organisation Name</label>
+            <select class="form-control" formControlName="dietCheck" id="dietCheck">
+              <option selected value="" disabled>Select</option>
+              <option value="Veg">Veg</option>
+              <option value="Non-Veg">Non-Veg</option>
+              <option value="Occasionally Non-Veg">Occasionally Non-Veg</option>
+              <option value="Eggeterian">Eggeterian</option>
+              <option value="Vegan">Vegan</option>
+            </select>
+            <small *ngIf="dietCheckError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="name">Your Height</label>
+              <select class="form-control" formControlName="heightCheck" id="heightCheck">
+                <option selected value="" disabled>Select</option>
+                <option value="4ft 5in - 134cm">4ft 5in - 134cm</option>
+                <option value="4ft 6in - 137cm">4ft 6in - 137cm</option>
+                <option value="4ft 7in - 140cm">4ft 7in - 140cm</option>
+                <option value="4ft 8in - 142cm">4ft 8in - 142cm</option>
+                <option value="4ft 9in - 145cm">4ft 9in - 145cm</option>
+                <option value="4ft 10in - 147cm">4ft 10in - 147cm</option>
+                <option value="4ft 11in - 150cm">4ft 11in - 150cm</option>
+                <option value="5ft 0in - 152cm">5ft 0in - 152cm</option>
+                <option value="5ft 1in - 155cm">5ft 1in - 155cm</option>
+                <option value="5ft 2in - 157cm">5ft 2in - 157cm</option>
+                <option value="5ft 3in - 160cm">5ft 3in - 160cm</option>
+                <option value="5ft 4in - 163cm">5ft 4in - 163cm</option>
+                <option value="5ft 5in - 165cm">5ft 5in - 165cm</option>
+                <option value="5ft 6in - 168cm">5ft 6in - 168cm</option>
+                <option value="5ft 7in - 170cm">5ft 7in - 170cm</option>
+                <option value="5ft 8in - 173cm">5ft 8in - 173cm</option>
+                <option value="5ft 9in - 175cm">5ft 9in - 175cm</option>
+                <option value="5ft 10in - 178cm">5ft 10in - 178cm</option>
+                <option value="5ft 11in - 180cm">5ft 11in - 180cm</option>
+                <option value="6ft 0in - 183cm">6ft 0in - 183cm</option>
+                <option value="6ft 1in - 185cm">6ft 1in - 185cm</option>
+                <option value="6ft 2in - 188cm">6ft 2in - 188cm</option>
+                <option value="6ft 3in - 191cm">6ft 3in - 191cm</option>
+                <option value="6ft 4in - 193cm">6ft 4in - 193cm</option>
+                <option value="6ft 5in - 195cm">6ft 5in - 195cm</option>
+                <option value="6ft 6in - 198cm">6ft 6in - 198cm</option>
+                <option value="6ft 7in - 201cm">6ft 7in - 201cm</option>
+                <option value="6ft 8in - 203cm">6ft 8in - 203cm</option>
+                <option value="6ft 9in - 205cm">6ft 9in - 205cm</option>
+                <option value="6ft 10in - 208cm">6ft 10in - 208cm</option>
+                <option value="6ft 11n - 210cm">6ft 11n - 210cm</option>
+                <option value="7ft 0in - 213cm">7ft 0in - 213cm</option>
+
+              </select>
+              <small *ngIf="heightCheckError" class="form-text text-danger">*Required.</small>
+          </div>
+
+          <button class="btn btn-primary" (click)="dietHightCheck()">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <app-footer></app-footer>
